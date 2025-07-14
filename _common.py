@@ -23,11 +23,15 @@ def error_exit (
 	else:
 		maybe_error = ""
 
-	print("{}{}{}\nArguments: {}".format(
+	print("{}{}{}{}{}\n{}Arguments: {}{}".format(
 		friendly_msg,
+		color_lightblack,
 		maybe_error,
 		error_msg,
-		sys.argv[1:]
+		color_reset,
+		color_lightblack,
+		sys.argv[1:],
+		color_reset
 	))
 	sys.exit(exit_code)
 

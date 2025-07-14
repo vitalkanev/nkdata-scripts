@@ -3,153 +3,18 @@ import urllib.request
 import json
 import datetime
 import sys
-# TODO: Implement tabulate
+from _common import *
+
 try:
 	from tabulate import tabulate
 except:
 	if len(sys.argv) == 3:
-		print("\x1b[1mPlease install the 'tabulate' module for leaderboard support.\x1b[0m\nThis is usually done by simply running 'pip install tabulate'.\nOn Linux you might want to create a virtual environment first, then run pip and python from the venv folder (or install pipx and run 'pipx install tabulate' - this will create a virtual environment automatically).")
+		print("{}Please install the 'tabulate' module for leaderboard support.{}\nThis is usually done by simply running 'pip install tabulate'.\nOn Linux you might want to create a virtual environment first, then run pip and python from the venv folder (or install pipx and run 'pipx install tabulate' - this will create a virtual environment automatically).".format(color_bold, color_reset))
 		sys.exit(3)
 	else:
 		pass
 
-color_reset      = '\x1b[0m'  
-color_bold       = '\x1b[1m'  # Odyssey Name
-color_italic     = '\x1b[3m'  # Odyssey Description when given no arguments
-color_lightblue  = '\x1b[96m' # Difficulty Name (actually Cyan, kept for internal reasons)
-color_lightred   = '\x1b[91m' # (EXTREME)
-color_lightblack = '\x1b[90m' # Odyssey ID if no args are given
-
 url_racelist  = "https://data.ninjakiwi.com/btd6/races"
-
-def error_exit (
-	friendly_msg, # Friendly error message returned to print() function
-	error_msg='', # Technical error message
-	exit_code=1   # Optional Exit Code
-):
-	if error_msg != '':
-		maybe_error = "\nError: "
-	else:
-		maybe_error = ""
-
-	print("{}{}{}{}{}\nArguments: {}".format(
-		color_lightred,
-		friendly_msg,
-		color_reset,
-		maybe_error,
-		error_msg,
-		sys.argv[1:]
-	))
-	sys.exit(exit_code)
-
-def load_json_url (url):
-	try:
-		return json.loads(urllib.request.urlopen(url).read())
-	# mainly `urllib.error.URLError`, but can handle other exceptions
-	except Exception as e:
-		error_exit(
-			"Something went wrong while fetching {}".format(url),
-			e
-		)
-
-# FIXME: Move to _common (once implemented)
-def pretty_map (map):
-	match map:
-		### BEGINNER ###
-		case 'Tutorial': return "Monkey Meadow" # Tutorial actually happens in Town Centre believe me or not ;)
-		case 'InTheLoop': return "In The Loop"
-		case 'MiddleOfTheRoad': return "Middle of the Road"
-		case 'SpaPits': return "Spa Pits"
-		case 'TreeStump': return "Tree Stump"
-		case 'TownCentre': return "Town Centre" # British spelling!
-		case 'OneTwoTree': return "One Two Tree"
-		case 'TheCabin': return "The Cabin"
-		case 'LotusIsland': return "Lotus Island"
-		case 'Candyfalls': return "Candy Falls"
-		case 'WinterPark': return "Winter Park"
-		case 'ParkPath': return "Park Path"
-		case 'AlpineRun': return "Alpine Run"
-		case 'FrozenOver': return "Frozen Over"
-		case 'FourCircles': return "Four Circles"
-		case 'EndOfTheRoad': return "End of the Road"
-		### INTERMEDIATE ###
-		case 'LuminousCove': return "Luminous Cove"
-		case 'SulfurSprings': return "Sulfur Springs"
-		case 'WaterPark': return "Water Park"
-		case 'CoveredGarden': return "Covered Garden"
-		case 'QuietSteet': return "Quiet Street"
-		case 'BloonariusPrime': return "Bloonarius Prime"
-		case 'AdorasTemple': return "Adora's Temple"
-		case 'SpringSpring': return "Spring Spring"
-		case 'KartsNDarts': return "Karts'n'Darts" # I prefer this spelling. Also, Pay'n'Spray
-		case 'MoonLanding': return "Moon Landing"
-		case 'FiringRange': return "Firing Range"
-		case 'SpiceIslands': return "Spice Island"
-		### ADVANCED ###
-		case 'SunsetGulch': return "Sunset Gulch"
-		case 'EnchantedGlade': return "Enchanted Glade"
-		case 'LastResort': return "Last Resort"
-		case 'AncientPortal': return "Ancient Portal"
-		case 'CastleRevenge': return "Castle Revenge"
-		case 'DarkPath': return "Dark Path"
-		case 'MidnightMansion': return "Midnight Mansion"
-		case 'SunkenColumns': return "Sunken Columns" # DID YOU KNOW: This map is a port of Battles 2 map "Basalt Columns"?
-		case 'XFactor': return "X-Factor" # I know I spell this like a classic TV show...
-		case 'PatsPond': return "Pat's Pond"
-		case 'HighFinance': return "High Finance"
-		case 'AnotherBrick': return "Another Brick"
-		case 'OffTheCoast': return "Off the Coast"
-		### EXPERT ###
-		case 'GlacialTrail': return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
-		case 'DarkDungeons': return "Dark Dungeons"
-		case 'FloodedValley': return "Flooded Valley"
-		case 'BloodyPuddles': return "Bloody Puddles"
-		case 'DarkCastle': return "Dark Castle"
-		case 'MuddyPuddles': return "Muddy Puddles"
-		case '#ouch': return "#Ouch"
-		### Special maps ###
-		case 'ProtectTheYacht': return "Protect The Yacht" # Mr. Beast Promo
-		case 'Blons': return "BLONS!!!"
-		### SINGLE-WORD MAPS ###
-		case _: return map
-
-def pretty_tower (a_tower):
-	match a_tower:
-		### HEROES ###
-		case 'StrikerJones':     return "Jones"
-		case 'ObynGreenfoot':    return "Obyn"
-		case 'CaptainChurchill': return "Churchill"
-		case 'PatFusty':         return "Pat"
-		case 'AdmiralBrickell':  return "Brickell"
-		### PRIMARY ###
-		case 'DartMonkey':       return "Dart"
-		case 'BoomerangMonkey':  return "Boomer"
-		case 'BombShooter':      return "Bomb"
-		case 'TackShooter':      return "Tack"
-		case 'IceMonkey':        return "Ice"
-		case 'GlueGunner':       return "Glue"
-		### MILITARY ###
-		case 'SniperMonkey':     return "Sniper"
-		case 'MonkeySub':        return "Sub"
-		case 'MonkeyBuccaneer':  return "Bucc"
-		case 'MonkeyAce':        return "Ace"
-		case 'HeliPilot':        return "Heli"
-		case 'MortarMonkey':     return "Mortar"
-		case 'DartlingGunner':   return "Dartling"
-		### MAGIC ###
-		case 'WizardMonkey':     return "Wizard"
-		case 'SuperMonkey':      return "Super"
-		case 'NinjaMonkey':      return "Ninja"
-		case 'Alchemist':        return "Alch"
-		### SUPPORT ###
-		case 'BananaFarm':       return "Farm"
-		case 'SpikeFactory':     return "Spike"
-		case 'MonkeyVillage':    return "Village"
-		case 'EngineerMonkey':   return "Engineer"
-		case 'BeastHandler':     return "Beast"
-		### Single-word heroes and towers - Geraldo, Desperado, Mermonkey, etc. ###
-		case _:                  return a_tower
-
 
 def list_races ():
 	formatted_list = ""
@@ -178,16 +43,12 @@ def get_race_info (race_id):
 	race_info_url = load_json_url("{}/{}/metadata".format(url_racelist, race_id))
 
 	if race_info_url['success'] == False:
-			# error_exit() is red and people hate reading a lot of red text
 			# This error message can be triggered by pasting an ID from a November 2024 snapshot:
 			# http://web.archive.org/web/20241011121941/https://data.ninjakiwi.com/btd6/races?pretty=true
-			print("{}\n{}Error: {}{}".format(
+			error_exit(
 				"Something went wrong. Here are a couple of reasons why that happened:\n1. {}You've entered a very old Race ID.{}\n   After a couple of weeks, these old Races are deleted from the Ninja Kiwi Data API.\n   The only way to check old Races is to use the #races channel in BTD6 Events server\n   or search the Ninja Kiwi server's #btd6-general channel\n2. {}You've entered wrong Race ID.{}\n   Check if you spelled the Race ID correctly and try again".format(color_bold, color_reset, color_bold, color_reset),
-				color_lightblack,
-				race_info_url['error'],
-				color_reset
-			))
-			sys.exit(1)
+				race_info_url['error']
+			)
 
 	race_info = race_info_url['body']
 
@@ -291,15 +152,15 @@ def get_race_scores (race_id, limit=50):
 		return value
 
 	if limit > 100:
-		print(
-			"This script can only provide Top 100 leaderboard. This is to simulate the in-game Race Leaderboard algorithm.\n{}Arguments={}{}".format(color_lightblack, sys.argv[1:], color_reset)
+		error_exit(
+			"This script can only provide Top 100 leaderboard. This is to simulate the in-game Race Leaderboard algorithm.",
+			exit_code=2
 		)
-		sys.exit(2)
 	elif limit == 0:
-		print(
-			"You are trying to print 0 scores. This is not logical!\n{}Arguments={}{}".format(color_lightblack, sys.argv[1:], color_reset)
+		error_exit(
+			"You are trying to print 0 scores. This is not logical!",
+			exit_code=2
 		)
-		sys.exit(2)
 
 	merged_scores = load_json_url("{}/{}/leaderboard".format(url_racelist, race_id))['body'] + load_json_url("{}/{}/leaderboard?page=2".format(url_racelist, race_id))['body']
 

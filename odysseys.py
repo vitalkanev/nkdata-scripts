@@ -71,16 +71,12 @@ def get_odyssey (id):
 		map_list = load_json_url('{}/{}/{}/maps'.format(url_odysseylist, id, dif))
 
 		if per_difficulty['success'] == False:
-			# error_exit() is red and people hate reading a lot of red text
 			# This error message can be triggered by pasting an ID from a November 2024 snapshot:
 			# http://web.archive.org/web/20241125193229/https://data.ninjakiwi.com/btd6/odyssey?pretty=true
-			print("{}\n{}Error: {}{}".format(
+			error_exit(
 				"Something went wrong. Here are a couple of reasons why that happened:\n1. {}You've entered a very old Odyssey ID.{}\n   After a couple of weeks, these old Odysseys are deleted from the Ninja Kiwi Data API.\n   The only way to check old Odysseys is to use the #odysseys channel in BTD6 Events server\n   or search the Ninja Kiwi server's #btd6-general channel\n2. {}You've entered wrong Odyssey ID.{}\n   Check if you spelled the Odyssey ID correctly and try again".format(color_bold, color_reset, color_bold, color_reset),
-				color_lightblack,
-				per_difficulty['error'],
-				color_reset
-			))
-			sys.exit(1)
+				per_difficulty['error']
+			)
 
 		is_extreme = ""
 		
