@@ -13,14 +13,12 @@
 # Version QUATRE of the Odysseys script:
 # - TOWER SORTING!!!!!! FINALLY!
 # - ...tho you will lose hero separation
-import urllib.request
-import json
 from datetime import datetime
 import sys
 import re
+from _common import *
 
 # FIXME: defs defs defs!
-# FIXME: _common.py
 
 # TODO: Implement Discord mode (sys.argv[2] == 'discord')
 #       ## Odyssey Name
@@ -29,212 +27,9 @@ import re
 #       *Reward: ||...||*
 #
 
-color_reset      = '\x1b[0m'  
-color_bold       = '\x1b[1m'  # Odyssey Name
-color_italic     = '\x1b[3m'  # Odyssey Description when given no arguments
-color_lightblue  = '\x1b[96m' # Difficulty Name (actually Cyan, kept for internal reasons)
-color_lightred   = '\x1b[91m' # (EXTREME)
-color_lightblack = '\x1b[90m' # Odyssey ID if no args are given
-
 url_odysseylist  = "https://data.ninjakiwi.com/btd6/odyssey"
 
-def error_exit (
-	friendly_msg, # Friendly error message returned to print() function
-	error_msg='', # Optional technical error message
-	exit_code=1   # Optional Exit Code
-):
-	if error_msg != '':
-		maybe_error = "\nError: "
-	else:
-		maybe_error = ""
-
-	# TODO: Do not enforce too much red
-	print("{}{}{}{}{}\nArguments: {}".format(
-		color_lightred,
-		friendly_msg,
-		color_reset,
-		maybe_error,
-		error_msg,
-		sys.argv[1:]
-	))
-	sys.exit(exit_code)
-
-def load_json_url (url):
-	try:
-		return json.loads(urllib.request.urlopen(url).read())
-	# mainly `urllib.error.URLError`, but can handle other exceptions
-	except Exception as e:
-		error_exit(
-			"Something went wrong while fetching '{}'".format(url),
-			e
-		)
-
-
-def pretty_tower (a_tower):
-	match a_tower:
-		### HEROES ###
-		case 'StrikerJones':     return "Jones"
-		case 'ObynGreenfoot':    return "Obyn"
-		case 'CaptainChurchill': return "Churchill"
-		case 'PatFusty':         return "Pat"
-		case 'AdmiralBrickell':  return "Brickell"
-		### PRIMARY ###
-		case 'DartMonkey':       return "Dart"
-		case 'BoomerangMonkey':  return "Boomer"
-		case 'BombShooter':      return "Bomb"
-		case 'TackShooter':      return "Tack"
-		case 'IceMonkey':        return "Ice"
-		case 'GlueGunner':       return "Glue"
-		### MILITARY ###
-		case 'SniperMonkey':     return "Sniper"
-		case 'MonkeySub':        return "Sub"
-		case 'MonkeyBuccaneer':  return "Bucc"
-		case 'MonkeyAce':        return "Ace"
-		case 'HeliPilot':        return "Heli"
-		case 'MortarMonkey':     return "Mortar"
-		case 'DartlingGunner':   return "Dartling"
-		### MAGIC ###
-		case 'WizardMonkey':     return "Wizard"
-		case 'SuperMonkey':      return "Super"
-		case 'NinjaMonkey':      return "Ninja"
-		case 'Alchemist':        return "Alch"
-		### SUPPORT ###
-		case 'BananaFarm':       return "Farm"
-		case 'SpikeFactory':     return "Spike"
-		case 'MonkeyVillage':    return "Village"
-		case 'EngineerMonkey':   return "Engineer"
-		case 'BeastHandler':     return "Beast"
-		### Single-word heroes and towers - Geraldo, Desperado, Mermonkey, etc. ###
-		case _:                  return a_tower
-
-# FIXME: Move to _common (once implemented)
-def pretty_map (map):
-	match map:
-		### BEGINNER ###
-		case 'Tutorial': return "Monkey Meadow" # Tutorial actually happens in Town Centre believe me or not ;)
-		case 'InTheLoop': return "In The Loop"
-		case 'MiddleOfTheRoad': return "Middle of the Road"
-		case 'SpaPits': return "Spa Pits"
-		case 'TreeStump': return "Tree Stump"
-		case 'TownCentre': return "Town Centre" # British spelling!
-		case 'OneTwoTree': return "One Two Tree"
-		case 'TheCabin': return "The Cabin"
-		case 'LotusIsland': return "Lotus Island"
-		case 'Candyfalls': return "Candy Falls"
-		case 'WinterPark': return "Winter Park"
-		case 'ParkPath': return "Park Path"
-		case 'AlpineRun': return "Alpine Run"
-		case 'FrozenOver': return "Frozen Over"
-		case 'FourCircles': return "Four Circles"
-		case 'EndOfTheRoad': return "End of the Road"
-		### INTERMEDIATE ###
-		case 'LuminousCove': return "Luminous Cove"
-		case 'SulfurSprings': return "Sulfur Springs"
-		case 'WaterPark': return "Water Park"
-		case 'CoveredGarden': return "Covered Garden"
-		case 'QuietSteet': return "Quiet Street"
-		case 'BloonariusPrime': return "Bloonarius Prime"
-		case 'AdorasTemple': return "Adora's Temple"
-		case 'SpringSpring': return "Spring Spring"
-		case 'KartsNDarts': return "Karts'n'Darts" # I prefer this spelling. Also, Pay'n'Spray
-		case 'MoonLanding': return "Moon Landing"
-		case 'FiringRange': return "Firing Range"
-		case 'SpiceIslands': return "Spice Island"
-		### ADVANCED ###
-		case 'SunsetGulch': return "Sunset Gulch"
-		case 'EnchantedGlade': return "Enchanted Glade"
-		case 'LastResort': return "Last Resort"
-		case 'AncientPortal': return "Ancient Portal"
-		case 'CastleRevenge': return "Castle Revenge"
-		case 'DarkPath': return "Dark Path"
-		case 'MidnightMansion': return "Midnight Mansion"
-		case 'SunkenColumns': return "Sunken Columns" # DID YOU KNOW: This map is a port of Battles 2 map "Basalt Columns"?
-		case 'XFactor': return "X-Factor" # I know I spell this like a classic TV show...
-		case 'PatsPond': return "Pat's Pond"
-		case 'HighFinance': return "High Finance"
-		case 'AnotherBrick': return "Another Brick"
-		case 'OffTheCoast': return "Off the Coast"
-		### EXPERT ###
-		case 'GlacialTrail': return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
-		case 'DarkDungeons': return "Dark Dungeons"
-		case 'FloodedValley': return "Flooded Valley"
-		case 'BloodyPuddles': return "Bloody Puddles"
-		case 'DarkCastle': return "Dark Castle"
-		case 'MuddyPuddles': return "Muddy Puddles"
-		case '#ouch': return "#Ouch"
-		### Special maps ###
-		case 'ProtectTheYacht': return "Protect The Yacht" # Mr. Beast Promo
-		case 'Blons': return "BLONS!!!"
-		### SINGLE-WORD MAPS ###
-		case _: return map
-
-
-def explicit_order(xs):
-    """Return a key function that, when passed to sort or sorted, will sort
-    the elements in the order they appear in this list.
-    """
-    keys = {x: i for i, x in enumerate(xs)}
-    def key_function(x):
-        return keys[x]
-    return key_function
-
-tower_sort_order = {
-    ## HEROES ##
-    'ChosenPrimaryHero': 0,
-    'Quincy': 1,
-    'Gwendolin': 2,
-    'StrikerJones': 3,
-    'ObynGreenfoot': 4,
-    'Rosalia': 5,
-    'CaptainChurchill': 6,
-    'Benjamin': 7,
-    'PatFusty': 8,
-    'Ezili': 9,
-    'Adora': 10,
-    'Etienne': 11,
-    'Sauda': 12,
-    'AdmiralBrickell': 13,
-    'Psi': 14,
-    'Geraldo': 15,
-    'Corvus': 16,
-    ## PRIMARY
-    'DartMonkey': 17,
-    'BoomerangMonkey': 18,
-    'BombShooter': 19,
-    'TackShooter': 20,
-    'IceMonkey': 21,
-    'GlueGunner': 22,
-    'Desperado': 23,
-    ## MILITARY ##
-    'SniperMonkey': 24,
-    'MonkeySub': 25,
-    'MonkeyBuccaneer': 26,
-    'MonkeyAce': 27,
-    'HeliPilot': 28,
-    'MortarMonkey': 29,
-    'DartlingGunner': 30,
-    ## MAGIC ##
-    'WizardMonkey': 31,
-    'SuperMonkey': 32,
-    'NinjaMonkey': 33,
-    'Alchemist': 34,
-    'Druid': 35,
-    'Mermonkey': 36,
-    ## SUPPORT ##
-    'BananaFarm': 37,
-    'SpikeFactory': 38,
-    'MonkeyVillage': 39,
-    'EngineerMonkey': 40,
-    'BeastHandler': 41
-}
-
-# Sanity Check
-if __name__ != '__main__':
-	print("Importing this script as a module is not supported. Exiting this Python instance...")
-	sys.exit(40)
-
-if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
-	# If executed with one of these options, show a small help message
+def print_help ():
 	print("""Use this script to display Odyssey events from Bloons TD 6, a video
 game developed and presented by Ninja Kiwi.
 
@@ -244,12 +39,28 @@ script will display all Odysseys available in Ninja Kiwi Data API.
 
 This script is not affiliated with Ninja Kiwi and/or their partners.
 Script developed by vitalkanev""".format( color_bold, color_reset ))
-	sys.exit()
 
-elif sys.argv[1:]:
+def list_odysseys ():
+	for lists in load_json_url(url_odysseylist)['body']:
+		print("{}[{}]{} {}{}{} -- {}{}{} \n\t{} - {}".format(
+			color_lightblack,
+			lists['id'],
+			color_reset,
+			color_bold,
+			lists['name'],
+			color_reset,
+			color_italic,
+			lists['description'],
+			color_reset,
+			# Convert the int to string, remove miliseconds from the time, then convert back to int.
+			datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S')
+		))
+
+def get_odyssey (id):
 	odysseys_list = load_json_url(url_odysseylist)
 	for my_odyssey in odysseys_list['body']:
-		if my_odyssey['id'] == sys.argv[1]:
+		if my_odyssey['id'] == id:
 			print(color_bold + my_odyssey['name'] + color_reset)
 			# # Uncomment these lines to re-enable the header
 			# for l in range(0, len(my_odyssey['name']) + 1):
@@ -261,9 +72,8 @@ elif sys.argv[1:]:
 	
 	for dif in odyssey_difficulties:
 
-		odyssey_id = sys.argv[1]
-		per_difficulty = load_json_url('{}/{}/{}'.format(url_odysseylist, odyssey_id, dif))
-		map_list = load_json_url('{}/{}/{}/maps'.format(url_odysseylist, odyssey_id, dif))
+		per_difficulty = load_json_url('{}/{}/{}'.format(url_odysseylist, id, dif))
+		map_list = load_json_url('{}/{}/{}/maps'.format(url_odysseylist, id, dif))
 
 		if per_difficulty['success'] == False:
 			# error_exit() is red and people hate reading a lot of red text
@@ -483,22 +293,21 @@ elif sys.argv[1:]:
 				return body['_rewards'][1]
 
 		print("\nReward: {}\n".format(reward()))
-	
+
+# Sanity Check
+# if __name__ != '__main__':
+# 	print("Importing this script as a module is not supported. Exiting this Python instance...")
+# sys.exit(40)
+
+if __name__ == "__main__":
+	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
+		# If executed with one of these options, show a small help message
+		print_help()
+		sys.exit()
+	elif sys.argv[1:]:
+		get_odyssey(sys.argv[1])
+	else:
+		list_odysseys()
 else:
-	# When no arguments given, list all Odysseys instead
-	for lists in load_json_url(url_odysseylist)['body']:
-		#print("{}[{}]{} {}{}{} -- {} {}| {} - {}{}".format( # initial version
-		print("{}[{}]{} {}{}{} -- {}{}{} \n\t{} - {}".format(
-			color_lightblack,
-			lists['id'],
-			color_reset,
-			color_bold,
-			lists['name'],
-			color_reset,
-			color_italic,
-			lists['description'],
-			color_reset,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S')
-		))
+	print("Importing this script as a module is not supported. Exiting this Python instance...")
+	sys.exit(40)
