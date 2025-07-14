@@ -109,7 +109,7 @@ def pretty_map (map):
 		case 'KartsNDarts': return "Karts'n'Darts" # I prefer this spelling. Also, Pay'n'Spray
 		case 'MoonLanding': return "Moon Landing"
 		case 'FiringRange': return "Firing Range"
-		case 'SpiceIslands': return "Spice Island"
+		case 'SpiceIslands': return "Spice Islands"
 		### ADVANCED ###
 		case 'SunsetGulch': return "Sunset Gulch"
 		case 'EnchantedGlade': return "Enchanted Glade"
