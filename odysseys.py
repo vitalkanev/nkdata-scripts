@@ -13,19 +13,14 @@
 # Version QUATRE of the Odysseys script:
 # - TOWER SORTING!!!!!! FINALLY!
 # - ...tho you will lose hero separation
+#
+# Version CINQ of the Odysseys script:
+# - _common!!!
+# - Functions!!!
 from datetime import datetime
 import sys
 import re
 from _common import *
-
-# FIXME: defs defs defs!
-
-# TODO: Implement Discord mode (sys.argv[2] == 'discord')
-#       ## Odyssey Name
-#       > Odyssey Description
-#       ### Difficulty
-#       *Reward: ||...||*
-#
 
 url_odysseylist  = "https://data.ninjakiwi.com/btd6/odyssey"
 
@@ -279,7 +274,6 @@ def get_odyssey (id):
 			elif body['_rewards'][1].startswith("Power:"):
 				my_power = body['_rewards'][1].replace("Power:", "")
 				
-				# TODO: Weird Powers -> Better Readability ;)
 				match my_power:
 					case 'DartTime':
 						return "TimeStop"
