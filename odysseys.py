@@ -282,7 +282,7 @@ def get_odyssey (id):
 			else:
 				return body['_rewards'][1]
 
-		print("\nReward: {}\n".format(reward()))
+		print("Reward: {}\n".format(reward()))
 
 # Sanity Check
 # if __name__ != '__main__':
