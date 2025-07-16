@@ -205,7 +205,7 @@ def get_odyssey (id):
 					stats += ", {}% MOAB Speed".format(int(maps['_bloonModifiers']['moabSpeedMultiplier'] * 100))
 				
 				if maps['_bloonModifiers']['regrowRateMultiplier'] != 1:
-					stats += ", {}% Regrow".format(int(maps['_bloonModifiers']['regrowRateMultiplier']) * 100)
+					stats += ", {}% Regrow".format(int((maps['_bloonModifiers']['regrowRateMultiplier']) * 100))
 
 				if maps['_bloonModifiers']['healthMultipliers']['bloons'] != 1:
 					stats += ", {}% Ceram HP".format(int(maps['_bloonModifiers']['healthMultipliers']['bloons'] * 100))
