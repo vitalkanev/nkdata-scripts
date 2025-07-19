@@ -104,8 +104,7 @@ def get_odyssey (id):
 
 		tower_tulip   = [] # For sorting
 		tower_list    = "" # For display
-		is_restricted = "" # So it can optionally display stuff like "TackShooter (4-4-4)"
-		amount        = "" # e.g. 3x or Inifinity symbol
+		amount        = "" # Optional
 	
 		for o, i in enumerate(body['_availableTowers']):
 			tower_tulip.insert(
@@ -121,6 +120,7 @@ def get_odyssey (id):
 			new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
 
 		for q in new1:
+			is_restricted = ""
 			path_1 = ""
 			path_2 = ""
 			path_3 = ""
