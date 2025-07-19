@@ -2,3 +2,4 @@ __pycache__
 
 # This is needed for documenting some things
 *.txt
+*.json
