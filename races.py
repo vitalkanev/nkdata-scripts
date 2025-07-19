@@ -3,6 +3,7 @@ import urllib.request
 import json
 import datetime
 import sys
+import re
 from _common import *
 
 try:
@@ -86,51 +87,71 @@ def get_race_info (race_id):
 
 	# TODO: Handle Stat Listing like in Odyssey.
 
-	# TODO: Sorted Tower Lister. Saves time!
-	for tows in race_info['_towers']:
-		if tows['isHero'] == True and tows['max'] != 0:
-			heroes_list += "{}, ".format(pretty_tower(tows['tower']))
-		elif tows['isHero'] == True and tows['tower'] == "ChosenPrimaryHero" and tows['max'] != 0:
-			heroes_list += "All Heroes"
-		elif tows['max'] != 0:
-			if tows['max'] != -1:
-				amount = "{}x ".format(tows['max'])
-			else:
-				amount = ""
-			
-			# Using `or` instead of `and` because there might be Odysseys that allow paths like 5-2-0
-			# Implemented special if to fix up '0--1-0' from 'Need_a_hand_pardner_mcdyhaxp'
+	tower_tulip   = [] # For sorting
+	tower_list    = "" # For display
+	amount        = "" # Optional
+
+	for o, i in enumerate(race_info['_towers']):
+		tower_tulip.insert(
+			o, [
+				i['tower'],                # [0]
+				i['max'],                  # [1]
+				i['path1NumBlockedTiers'], # [2]
+				i['path2NumBlockedTiers'], # [3]
+				i['path3NumBlockedTiers'], # [4]
+				i['isHero']                # [5]
+			])
+	new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
+
+	for q in new1:
+		is_restricted = ""
+		if q[1] != 0:
 			path_1 = ""
 			path_2 = ""
 			path_3 = ""
-			if tows['path1NumBlockedTiers'] != 0 or tows['path2NumBlockedTiers'] != 0 or tows['path3NumBlockedTiers'] != 0:
-				if tows['path1NumBlockedTiers'] == -1:
+			# HACK HACK HACK
+			if q[2] != 0 or q[3] != 0 or q[4] != 0:
+				if q[2] == -1:
+					path_1 = 0
+				elif q[2] == 0:
 					path_1 = 5
 				else:
-					path_1 = tows['path1NumBlockedTiers']
+					path_1 = 5 - q[2]
 
-				if tows['path2NumBlockedTiers'] == -1:
+				if q[3] == -1:
+					path_2 = 0
+				elif q[3] == 0:
 					path_2 = 5
 				else:
-					path_2 = tows['path2NumBlockedTiers']
+					path_2 = 5 - q[3]
 				
-				if tows['path3NumBlockedTiers'] == -1:
+				if q[4] == -1:
+					path_3 = 0
+				elif q[4] == 0:
 					path_3 = 5
 				else:
-					path_3 = tows['path3NumBlockedTiers']
+					path_3 = 5 - q[4]
+
+				print("{} @ {}x: {}-{}-{}".format(
+					q[0], q[1], path_1, path_2, path_3
+				))
 
 				is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
-			
+
+			if q[1] == 1 and q[5] == True:
+				amount = ""
+			elif q[1] != -1:
+				amount = "{}x ".format(q[1])
+			else:
+				amount = ""
+
 			tower_list += ", {}{}{}".format(
 				amount,
-				pretty_tower(tows['tower']),
+				pretty_tower(q[0]),
 				is_restricted
 			)
-	
-	all_list = heroes_list + tower_list
-	all_list = all_list.replace(', ,', ';')
-	
-	print(all_list)
+
+	print(re.sub('^, ', '', tower_list))
 	print("\n{}Add a number between 1 and 100 to display the leaderboard!\nNOTE: There might be differences between Data API and the actual game. When in doubt, trust the game first!{}".format(color_italic, color_reset))
 
 def get_race_scores (race_id, limit=50):
