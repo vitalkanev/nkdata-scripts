@@ -155,12 +155,15 @@ def get_odyssey (id):
 				is_restricted
 			)
 
+		# HACK
+		if tower_list.startswith(", Quincy, Gwendolin, Jones, Obyn, Rosalia, Churchill, Benjamin, Pat, Ezili, Adora, Etienne, Sauda, Brickell, Psi, Geraldo, Corvus,"):
+			tower_list = tower_list.replace(", Quincy, Gwendolin, Jones, Obyn, Rosalia, Churchill, Benjamin, Pat, Ezili, Adora, Etienne, Sauda, Brickell, Psi, Geraldo, Corvus,", "All Heroes,")
+
 		print(re.sub('^, ', '', tower_list))
 
 		# Map Stat Handling
 		for num, maps in enumerate(map_list['body']):
 			map_mode = ""
-
 
 			# Clicks is an internal name for CHIMPS
 			if maps['mode'] == "Clicks":
