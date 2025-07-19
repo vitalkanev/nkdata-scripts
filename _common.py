@@ -5,11 +5,11 @@ import json
 
 # Colors
 color_reset      = '\x1b[0m'  
-color_bold       = '\x1b[1m'  # Odyssey Name
-color_italic     = '\x1b[3m'  # Odyssey Description when given no arguments
-color_lightblue  = '\x1b[96m' # Difficulty Name (actually Cyan, kept for internal reasons)
-color_lightred   = '\x1b[91m' # (EXTREME)
-color_lightblack = '\x1b[90m' # Odyssey ID if no args are given
+color_bold       = '\x1b[1m'
+color_italic     = '\x1b[3m'
+color_lightblue  = '\x1b[96m'
+color_lightred   = '\x1b[91m'
+color_lightblack = '\x1b[90m'
 
 
 # Error Exit
@@ -138,18 +138,9 @@ def pretty_map (map):
 		case '#ouch':           return "#Ouch"
 		### Special maps ###
 		case 'ProtectTheYacht': return "Protect The Yacht" # Mr. Beast Promo
-		case 'Blons':           return "BLONS!!!"
+		case 'Blons':           return "BLONS!!!" # Don't ask me why (rhyme this like "It doesn't matter")
 		### SINGLE-WORD MAPS ###
 		case _: return map
-
-def explicit_order(xs):
-    """Return a key function that, when passed to sort or sorted, will sort
-    the elements in the order they appear in this list.
-    """
-    keys = {x: i for i, x in enumerate(xs)}
-    def key_function(x):
-        return keys[x]
-    return key_function
 
 tower_sort_order = {
     ## HEROES ##
@@ -170,7 +161,7 @@ tower_sort_order = {
     'Psi': 14,
     'Geraldo': 15,
     'Corvus': 16,
-    ## PRIMARY
+    ## PRIMARY ##
     'DartMonkey': 17,
     'BoomerangMonkey': 18,
     'BombShooter': 19,
