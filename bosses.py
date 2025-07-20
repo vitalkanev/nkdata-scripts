@@ -1,4 +1,3 @@
-# odysseys.py but for bosses
 import urllib.request
 import json
 import datetime

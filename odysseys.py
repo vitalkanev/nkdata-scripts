@@ -1,22 +1,3 @@
-# Version DEUX of the Odysseys script:
-# - COLOURS!!!
-# - List all Odysseys if no argument is provided
-# - Get overview of the Odyssey if the Odyssey ID is sent to arg0
-#
-# Version TROIS of the Odysseys script:
-# - Improved Difficulty reward handling
-# - Better Error Tooling
-# - Pretty Names of *almost* everything! Towers, Heroes, Maps
-# - Proper tower list!!!!
-# - Better Map list!!!!!
-#
-# Version QUATRE of the Odysseys script:
-# - TOWER SORTING!!!!!! FINALLY!
-# - ...tho you will lose hero separation
-#
-# Version CINQ of the Odysseys script:
-# - _common!!!
-# - Functions!!!
 from datetime import datetime
 import sys
 import re

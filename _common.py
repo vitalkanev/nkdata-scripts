@@ -12,7 +12,6 @@ color_lightblue  = '\x1b[96m'
 color_lightred   = '\x1b[91m'
 color_lightblack = '\x1b[90m'
 
-
 # Error Exit
 def error_exit (
 	friendly_msg, # Friendly error message returned to print() function
@@ -206,9 +205,7 @@ def fmttime(millisecs):
 
 def map_stats (my_map):
 	stats = ""
-
-	# _bloonModifiers has bossSpeedMultiplier and healthMultipliers.boss - currently unused
-	# Does this mean we're going to have Boss Odysseys soon? huds601Smug
+	
 	if my_map['_bloonModifiers']['allCamo'] == True:
 		stats += ", AllCamo"
 	
@@ -262,9 +259,5 @@ def map_stats (my_map):
 
 	if my_map['leastTiersUsed'] == True:
 		stats += ", Least Tiers: {}".format(my_map['leastTiersUsed'])
-
-	# if (script_type == "odyssey" and len(my_map['roundSets']) > 1) or (script_type == "boss" and len(my_map['roundSets']) > 2):
-	# 	# This will print as CustomRounds=['...']
-	# 	stats += ", CustomRounds={}".format(my_map['roundSets'][1:])
 
 	return stats
