@@ -17,6 +17,23 @@ except:
 
 url_racelist  = "https://data.ninjakiwi.com/btd6/races"
 
+def print_help ():
+	print("""Use this script to display Race events from Bloons TD 6,
+a video game developed and presented by Ninja Kiwi.
+
+This script allows multiple optional arguments:
+1. Display information about specific Race Event:
+   $ python bosses.py [race_id]
+2. Display Top X leaderboard for specific Race Event:
+   $ python bosses.py [race_id] [1-100]
+
+When no arguments are given, displays list of all Race Events
+currently available.
+
+This script is not affiliated with Ninja Kiwi and/or their partners.
+Script developed by vitalkanev""".format( color_bold, color_reset ))
+	sys.exit()
+
 def list_races ():
 	formatted_list = ""
 
@@ -40,7 +57,7 @@ def list_races ():
 
 	print(formatted_list)
 
-def get_race_info (race_id):
+def get_race (race_id):
 	race_info_url = load_json_url("{}/{}/metadata".format(url_racelist, race_id))
 
 	if race_info_url['success'] == False:
@@ -193,11 +210,9 @@ if __name__ == "__main__":
 	if len(sys.argv) == 3:
 		get_race_scores(sys.argv[1], sys.argv[2])
 	elif sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
-		# TODO: See print() here!
-		print("TODO: Implement Help")
-		sys.exit(0)
+		print_help()
 	elif len(sys.argv) == 2:
-		get_race_info(sys.argv[1])
+		get_race(sys.argv[1])
 	elif len(sys.argv) == 1:
 		list_races()
 else:
