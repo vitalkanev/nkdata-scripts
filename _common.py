@@ -194,67 +194,67 @@ tower_sort_order = {
     'BeastHandler': 41
 }
 
-def map_stats (map):
+def map_stats (my_map):
 	stats = ""
 
 	# _bloonModifiers has bossSpeedMultiplier and healthMultipliers.boss - currently unused
 	# Does this mean we're going to have Boss Odysseys soon? huds601Smug
-	if map['_bloonModifiers']['allCamo'] == True:
+	if my_map['_bloonModifiers']['allCamo'] == True:
 		stats += ", AllCamo"
 	
-	if map['_bloonModifiers']['allRegen'] == True:
+	if my_map['_bloonModifiers']['allRegen'] == True:
 		stats += ", AllRegrow"
 
-	if map['disableMK'] == True:
+	if my_map['disableMK'] == True:
 		stats += ", NoMK"
 	
-	if map['disableSelling'] == True:
+	if my_map['disableSelling'] == True:
 		stats += ", NoSelling"
 
-	if map['disableDoubleCash'] == True:
+	if my_map['disableDoubleCash'] == True:
 		stats += ", NoDoubleCash"
 	
-	if map['disableInstas'] == True:
+	if my_map['disableInstas'] == True:
 		stats += ", NoInstas"
 	
-	if map['disablePowers'] == True:
+	if my_map['disablePowers'] == True:
 		stats += ", NoPowers"
 	
-	if map['_bloonModifiers']['bossSpeedMultiplier'] != 1:
-		stats += ", {}% Boss Speed".format(int(map['_bloonModifiers']['bossSpeedMultiplier'] * 100))
+	if my_map['_bloonModifiers']['bossSpeedMultiplier'] != 1:
+		stats += ", {}% Boss Speed".format(int(my_map['_bloonModifiers']['bossSpeedMultiplier'] * 100))
 
-	if map['_bloonModifiers']['speedMultiplier'] != 1:
-		stats += ", {}% Bloon Speed".format(int(map['_bloonModifiers']['speedMultiplier'] * 100))
+	if my_map['_bloonModifiers']['speedMultiplier'] != 1:
+		stats += ", {}% Bloon Speed".format(int(my_map['_bloonModifiers']['speedMultiplier'] * 100))
 	
-	if map['_bloonModifiers']['moabSpeedMultiplier'] != 1:
-		stats += ", {}% MOAB Speed".format(int(map['_bloonModifiers']['moabSpeedMultiplier'] * 100))
+	if my_map['_bloonModifiers']['moabSpeedMultiplier'] != 1:
+		stats += ", {}% MOAB Speed".format(int(my_map['_bloonModifiers']['moabSpeedMultiplier'] * 100))
 
-	if map['_bloonModifiers']['healthMultipliers']['boss'] != 1:
-		stats += ", {}% Boss HP".format(int(map['_bloonModifiers']['healthMultipliers']['boss'] * 100))
+	if my_map['_bloonModifiers']['healthMultipliers']['boss'] != 1:
+		stats += ", {}% Boss HP".format(int(my_map['_bloonModifiers']['healthMultipliers']['boss'] * 100))
 
-	if map['_bloonModifiers']['healthMultipliers']['bloons'] != 1:
-		stats += ", {}% Ceram HP".format(int(map['_bloonModifiers']['healthMultipliers']['bloons'] * 100))
+	if my_map['_bloonModifiers']['healthMultipliers']['bloons'] != 1:
+		stats += ", {}% Ceram HP".format(int(my_map['_bloonModifiers']['healthMultipliers']['bloons'] * 100))
 	
-	if map['_bloonModifiers']['healthMultipliers']['moabs'] != 1:
-		stats += ", {}% MOAB HP".format(int(map['_bloonModifiers']['healthMultipliers']['moabs'] * 100))
+	if my_map['_bloonModifiers']['healthMultipliers']['moabs'] != 1:
+		stats += ", {}% MOAB HP".format(int(my_map['_bloonModifiers']['healthMultipliers']['moabs'] * 100))
 	
-	if map['abilityCooldownReductionMultiplier'] != 1:
-		stats += ", {}% Ability".format(int(map['abilityCooldownReductionMultiplier'] * 100))
+	if my_map['abilityCooldownReductionMultiplier'] != 1:
+		stats += ", {}% Ability".format(int(my_map['abilityCooldownReductionMultiplier'] * 100))
 
-	if map['_bloonModifiers']['regrowRateMultiplier'] != 1:
-		stats += ", {}% Regrow".format(int((map['_bloonModifiers']['regrowRateMultiplier']) * 100))
+	if my_map['_bloonModifiers']['regrowRateMultiplier'] != 1:
+		stats += ", {}% Regrow".format(int((my_map['_bloonModifiers']['regrowRateMultiplier']) * 100))
 	
-	if map['removeableCostMultiplier'] != 1:
-		stats += ", {}% Removables".format(int(map['removeableCostMultiplier'] * 100))
+	if my_map['removeableCostMultiplier'] != 1:
+		stats += ", {}% Removables".format(int(my_map['removeableCostMultiplier'] * 100))
 
-	if map['leastCashUsed'] != -1:
-		stats += ", Least Cash: ${}".format(map['leastCashUsed'])
+	if my_map['leastCashUsed'] != -1:
+		stats += ", Least Cash: ${}".format(my_map['leastCashUsed'])
 
-	if map['leastTiersUsed'] == True:
-		stats += ", Least Tiers: {}".format(map['leastTiersUsed'])
+	if my_map['leastTiersUsed'] == True:
+		stats += ", Least Tiers: {}".format(my_map['leastTiersUsed'])
 	
-	if (script_type == "odyssey" and len(map['roundSets']) > 1) or (script_type == "boss" and len(map['roundSets']) > 2):
+	if (script_type == "odyssey" and len(my_map['roundSets']) > 1) or (script_type == "boss" and len(my_map['roundSets']) > 2):
 		# This will print as CustomRounds=['...']
-		stats += ", CustomRounds={}".format(map['roundSets'][1:])
+		stats += ", CustomRounds={}".format(my_map['roundSets'][1:])
 
 	return stats
