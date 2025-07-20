@@ -106,7 +106,7 @@ def pretty_map (map):
 		case 'SulfurSprings':   return "Sulfur Springs"
 		case 'WaterPark':       return "Water Park"
 		case 'CoveredGarden':   return "Covered Garden"
-		case 'QuietSteet':      return "Quiet Street"
+		case 'QuietStreet':     return "Quiet Street"
 		case 'BloonariusPrime': return "Bloonarius Prime"
 		case 'AdorasTemple':    return "Adora's Temple"
 		case 'SpringSpring':    return "Spring Spring"
