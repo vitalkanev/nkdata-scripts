@@ -6,9 +6,6 @@ import sys
 import re
 from _common import *
 
-script_type = "boss"
-
-# TODO: Implement tabulate
 try:
 	from tabulate import tabulate
 except:
@@ -17,8 +14,6 @@ except:
 		sys.exit(3)
 	else:
 		pass
-
-# TODO: Everything
 
 def pretty_boss (a):
 	match a:
@@ -38,6 +33,25 @@ def pretty_score (b):
 		case _:            return b
 
 url_bosslist  = "https://data.ninjakiwi.com/btd6/bosses"
+
+def print_help ():
+	print("""Use this script to display Boss Bloons events from Bloons TD 6,
+a video game developed and presented by Ninja Kiwi.
+
+This script allows multiple optional arguments:
+1. Display information about specific Boss Bloon Event:
+   $ python bosses.py [boss_id]
+2. Display Top 50 leaderboard for specific Boss Bloon Event:
+   $ python bosses.py [boss_id] [normal|elite]
+2. Display Top X leaderboard for specific Boss Bloon Event:
+   $ python bosses.py [boss_id] [normal|elite] [1-100]
+
+When no arguments are given, displays list of all Boss Bloon Events
+currently available.
+
+This script is not affiliated with Ninja Kiwi and/or their partners.
+Script developed by vitalkanev""".format( color_bold, color_reset ))
+	sys.exit()
 
 def list_bosses ():
 	formatted_list = ""
@@ -193,10 +207,13 @@ def get_boss_scores (boss_id, boss_type, limit=50):
 		case 'elite': difficulty = "elite"
 		case _: error_exit("Leaderboards only work if 'normal' or 'Elite' is supplied", '', 2)
 	
+	try:
+		limit = int(limit)
+	except:
+		error_exit("The top scores argument must be between 1 and 100", exit_code=4)
+
 	# If too early
 	test_board = load_json_url("{}/{}/leaderboard/{}/1?page=1".format(url_bosslist, boss_id, difficulty))
-
-	#print(test_board['body'][0]['scoreParts'][2]['name'])
 
 	if test_board['success'] == False:
 		error_exit("Either Boss event has not started yet or you queried the scores too early or the leaderboards have bugged", test_board['error'])
@@ -257,11 +274,9 @@ if __name__ == "__main__":
 	if len(sys.argv) == 3:
 		get_boss_scores(sys.argv[1], sys.argv[2])
 	elif len(sys.argv) == 4:
-		get_boss_scores(sys.argv[1], sys.argv[2], int(sys.argv[3]))
+		get_boss_scores(sys.argv[1], sys.argv[2], sys.argv[3])
 	elif sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
-		# TODO: See print() here!
-		print("TODO: Implement Help")
-		sys.exit(0)
+		print_help()
 	elif len(sys.argv) == 2:
 		get_boss(sys.argv[1])
 	elif len(sys.argv) == 1:
