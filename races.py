@@ -109,7 +109,7 @@ def get_race_info (race_id):
 			path_1 = ""
 			path_2 = ""
 			path_3 = ""
-			# HACK HACK HACK
+			# HACK: Race API specifically returns weird tower restrictions. This will figure it out.
 			if q[2] != 0 or q[3] != 0 or q[4] != 0:
 				if q[2] == -1:
 					path_1 = 0
@@ -132,10 +132,6 @@ def get_race_info (race_id):
 				else:
 					path_3 = 5 - q[4]
 
-				print("{} @ {}x: {}-{}-{}".format(
-					q[0], q[1], path_1, path_2, path_3
-				))
-
 				is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
 
 			if q[1] == 1 and q[5] == True:
@@ -152,6 +148,10 @@ def get_race_info (race_id):
 			)
 
 	print(re.sub('^, ', '', tower_list))
+
+	if map_stats(race_info) != "":
+		print(re.sub('^, ', '', map_stats(race_info)))
+
 	print("\n{}Add a number between 1 and 100 to display the leaderboard!\nNOTE: There might be differences between Data API and the actual game. When in doubt, trust the game first!{}".format(color_italic, color_reset))
 
 def get_race_scores (race_id, limit=50):

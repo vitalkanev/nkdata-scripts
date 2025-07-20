@@ -17,6 +17,8 @@
 # Version CINQ of the Odysseys script:
 # - _common!!!
 # - Functions!!!
+script_type = "odyssey"
+
 from datetime import datetime
 import sys
 import re
@@ -117,7 +119,7 @@ def get_odyssey (id):
 					i['isHero']                # [5]
 				])
 
-			new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
+		new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
 
 		for q in new1:
 			is_restricted = ""
@@ -175,66 +177,6 @@ def get_odyssey (id):
 			else:
 				map_mode = maps['mode']
 
-			def mapStats ():
-				stats = ""
-
-				# _bloonModifiers has bossSpeedMultiplier and healthMultipliers.boss - currently unused
-				# Does this mean we're going to have Boss Odysseys soon? huds601Smug
-				if maps['_bloonModifiers']['allCamo'] == True:
-					stats += ", AllCamo"
-				
-				if maps['_bloonModifiers']['allRegen'] == True:
-					stats += ", AllRegrow"
-
-				if maps['disableMK'] == True:
-					stats += ", NoMK"
-				
-				if maps['disableSelling'] == True:
-					stats += ", NoSelling"
-
-				if maps['disableDoubleCash'] == True:
-					stats += ", NoDoubleCash"
-				
-				if maps['disableInstas'] == True:
-					stats += ", NoInstas"
-				
-				if maps['disablePowers'] == True:
-					stats += ", NoPowers"
-				
-				if maps['_bloonModifiers']['speedMultiplier'] != 1:
-					stats += ", {}% Bloon Speed".format(int(maps['_bloonModifiers']['speedMultiplier'] * 100))
-				
-				if maps['_bloonModifiers']['moabSpeedMultiplier'] != 1:
-					stats += ", {}% MOAB Speed".format(int(maps['_bloonModifiers']['moabSpeedMultiplier'] * 100))
-				
-				if maps['_bloonModifiers']['regrowRateMultiplier'] != 1:
-					stats += ", {}% Regrow".format(int((maps['_bloonModifiers']['regrowRateMultiplier']) * 100))
-
-				if maps['_bloonModifiers']['healthMultipliers']['bloons'] != 1:
-					stats += ", {}% Ceram HP".format(int(maps['_bloonModifiers']['healthMultipliers']['bloons'] * 100))
-				
-				if maps['_bloonModifiers']['healthMultipliers']['moabs'] != 1:
-					stats += ", {}% MOAB HP".format(int(maps['_bloonModifiers']['healthMultipliers']['moabs'] * 100))
-				
-				if maps['abilityCooldownReductionMultiplier'] != 1:
-					stats += ", {}% Ability".format(int(maps['abilityCooldownReductionMultiplier'] * 100))
-				
-				if maps['removeableCostMultiplier'] != 1:
-					stats += ", {}% Removables".format(int(maps['removeableCostMultiplier'] * 100))
-
-				if maps['leastCashUsed'] != -1:
-					stats += ", Least Cash: ${}".format(maps['leastCashUsed'])
-
-				if maps['leastTiersUsed'] == True:
-					stats += ", Least Tiers: {}".format(maps['leastTiersUsed'])
-				
-				if len(maps['roundSets']) > 1:
-					# This will print as CustomRounds=['...']
-					# TODO: Are there Odysseys with 2 or more custom round sets?
-					stats += ", CustomRounds={}".format(maps['roundSets'][1:])
-
-				return stats
-
 			one_map = "{}. {}{}{}, {}/{}, ${}, r{}/{},{}".format(
 				num+1,
 				color_bold,
@@ -245,10 +187,10 @@ def get_odyssey (id):
 				maps['startingCash'],
 				maps['startRound'],
 				maps['endRound'],
-				mapStats()
+				map_stats(maps)
 			)
 			
-			if mapStats() == "":
+			if map_stats(maps) == "":
 				one_map = re.sub(',$', '', one_map)
 			else:
 				one_map = one_map.replace(',,', ';')

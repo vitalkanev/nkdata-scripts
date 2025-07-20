@@ -3,6 +3,8 @@ import sys
 import urllib.request
 import json
 
+script_type = "shared"
+
 # Colors
 color_reset      = '\x1b[0m'  
 color_bold       = '\x1b[1m'
@@ -191,3 +193,68 @@ tower_sort_order = {
     'EngineerMonkey': 40,
     'BeastHandler': 41
 }
+
+def map_stats (map):
+	stats = ""
+
+	# _bloonModifiers has bossSpeedMultiplier and healthMultipliers.boss - currently unused
+	# Does this mean we're going to have Boss Odysseys soon? huds601Smug
+	if map['_bloonModifiers']['allCamo'] == True:
+		stats += ", AllCamo"
+	
+	if map['_bloonModifiers']['allRegen'] == True:
+		stats += ", AllRegrow"
+
+	if map['disableMK'] == True:
+		stats += ", NoMK"
+	
+	if map['disableSelling'] == True:
+		stats += ", NoSelling"
+
+	if map['disableDoubleCash'] == True:
+		stats += ", NoDoubleCash"
+	
+	if map['disableInstas'] == True:
+		stats += ", NoInstas"
+	
+	if map['disablePowers'] == True:
+		stats += ", NoPowers"
+	
+	if map['_bloonModifiers']['bossSpeedMultiplier'] != 1:
+		stats += ", {}% Boss Speed".format(int(map['_bloonModifiers']['bossSpeedMultiplier'] * 100))
+
+	if map['_bloonModifiers']['speedMultiplier'] != 1:
+		stats += ", {}% Bloon Speed".format(int(map['_bloonModifiers']['speedMultiplier'] * 100))
+	
+	if map['_bloonModifiers']['moabSpeedMultiplier'] != 1:
+		stats += ", {}% MOAB Speed".format(int(map['_bloonModifiers']['moabSpeedMultiplier'] * 100))
+
+	if map['_bloonModifiers']['healthMultipliers']['boss'] != 1:
+		stats += ", {}% Boss HP".format(int(map['_bloonModifiers']['healthMultipliers']['boss'] * 100))
+
+	if map['_bloonModifiers']['healthMultipliers']['bloons'] != 1:
+		stats += ", {}% Ceram HP".format(int(map['_bloonModifiers']['healthMultipliers']['bloons'] * 100))
+	
+	if map['_bloonModifiers']['healthMultipliers']['moabs'] != 1:
+		stats += ", {}% MOAB HP".format(int(map['_bloonModifiers']['healthMultipliers']['moabs'] * 100))
+	
+	if map['abilityCooldownReductionMultiplier'] != 1:
+		stats += ", {}% Ability".format(int(map['abilityCooldownReductionMultiplier'] * 100))
+
+	if map['_bloonModifiers']['regrowRateMultiplier'] != 1:
+		stats += ", {}% Regrow".format(int((map['_bloonModifiers']['regrowRateMultiplier']) * 100))
+	
+	if map['removeableCostMultiplier'] != 1:
+		stats += ", {}% Removables".format(int(map['removeableCostMultiplier'] * 100))
+
+	if map['leastCashUsed'] != -1:
+		stats += ", Least Cash: ${}".format(map['leastCashUsed'])
+
+	if map['leastTiersUsed'] == True:
+		stats += ", Least Tiers: {}".format(map['leastTiersUsed'])
+	
+	if (script_type == "odyssey" and len(map['roundSets']) > 1) or (script_type == "boss" and len(map['roundSets']) > 2):
+		# This will print as CustomRounds=['...']
+		stats += ", CustomRounds={}".format(map['roundSets'][1:])
+
+	return stats
