@@ -96,7 +96,7 @@ def pretty_map (map):
 		case 'OneTwoTree':      return "One Two Tree"
 		case 'TheCabin':        return "The Cabin"
 		case 'LotusIsland':     return "Lotus Island"
-		case 'Candyfalls':      return "Candy Falls"
+		case 'CandyFalls':      return "Candy Falls"
 		case 'WinterPark':      return "Winter Park"
 		case 'ParkPath':        return "Park Path"
 		case 'AlpineRun':       return "Alpine Run"
