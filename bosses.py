@@ -249,16 +249,6 @@ def get_boss_scores (boss_id, boss_type, limit=50):
 	score_array = []
 	type_headers = ""
 
-	# https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
-	# With modifications by vitalkanev
-	def fmttime(millisecs):
-		secs = millisecs / 1000.0
-		d = datetime.timedelta(seconds=secs)
-		t = (datetime.datetime.min + d).time()
-		milli = t.strftime('%f')[:3]
-		value = t.strftime('%H:%M:%S.') + milli
-		return value
-
 	if test_board['body'][0]['scoreParts'][1]['name'] == "Tier Count":
 		type_headers = "Tiers"
 	elif test_board['body'][0]['scoreParts'][1]['name'] == "Least Cash":

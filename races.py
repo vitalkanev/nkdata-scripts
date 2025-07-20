@@ -174,16 +174,6 @@ def get_race_scores (race_id, limit=50):
 
 	score_array = []
 
-	# https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
-	# With modifications by vitalkanev
-	def fmttime(millisecs):
-		secs = millisecs / 1000.0
-		d = datetime.timedelta(seconds=secs)
-		t = (datetime.datetime.min + d).time()
-		milli = t.strftime('%f')[:3]
-		value = t.strftime('%H:%M:%S.') + milli
-		return value
-
 	if limit > 100:
 		error_exit(
 			"This script can only provide Top 100 leaderboard. This is to simulate the in-game Race Leaderboard algorithm.",

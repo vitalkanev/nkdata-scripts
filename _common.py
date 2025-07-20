@@ -2,6 +2,7 @@
 import sys
 import urllib.request
 import json
+import datetime
 
 # Colors
 color_reset      = '\x1b[0m'  
@@ -192,6 +193,16 @@ tower_sort_order = {
     'EngineerMonkey': 40,
     'BeastHandler': 41
 }
+
+# https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
+# With modifications by vitalkanev
+def fmttime(millisecs):
+	secs = millisecs / 1000.0
+	d = datetime.timedelta(seconds=secs)
+	t = (datetime.datetime.min + d).time()
+	milli = t.strftime('%f')[:3]
+	value = t.strftime('%H:%M:%S.') + milli
+	return value
 
 def map_stats (my_map):
 	stats = ""
