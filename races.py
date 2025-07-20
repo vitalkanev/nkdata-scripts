@@ -54,9 +54,6 @@ def get_race_info (race_id):
 	race_info = race_info_url['body']
 
 	is_least_type = ""
-	tower_list = ""
-	heroes_list = ""
-	is_restricted = ""
 
 	if race_info['leastCashUsed'] != -1:
 		is_least_type = " - Least Cash: ${}".format(race_info['leastCashUsed'])
@@ -84,8 +81,6 @@ def get_race_info (race_id):
 		color_reset,
 		race_info['lives']
 	))
-
-	# TODO: Handle Stat Listing like in Odyssey.
 
 	tower_tulip   = [] # For sorting
 	tower_list    = "" # For display
