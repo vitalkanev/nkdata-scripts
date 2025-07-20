@@ -1,137 +1,269 @@
 # odysseys.py but for bosses
 import urllib.request
 import json
-from datetime import datetime
+import datetime
 import sys
+import re
+from _common import *
+
+script_type = "boss"
+
 # TODO: Implement tabulate
 try:
-	import tabulate
+	from tabulate import tabulate
 except:
-	if len(sys.argv) == 3:
-		print("\x1b[1mPlease install the 'tabulate' module for leaderboard support.\x1b[0m\nThis is usually done by simply running 'pip install tabulate'.\nOn Linux you might want to create a virtual environment first, then run pip and python from the venv folder (or install pipx and run 'pipx install tabulate' - this will create virtual environment automatically).")
+	if len(sys.argv) >= 2:
+		print("{}Please install the 'tabulate' module for leaderboard support.{}\nThis is usually done by simply running 'pip install tabulate'.\nOn Linux you might want to create a virtual environment first, then run pip and python from the venv folder (or install pipx and run 'pipx install tabulate' - this will create a virtual environment automatically).".format(color_bold, color_reset))
 		sys.exit(3)
 	else:
 		pass
 
-color_reset      = '\x1b[0m'  
-color_bold       = '\x1b[1m'  # Odyssey Name
-color_italic     = '\x1b[3m'  # Odyssey Description when given no arguments
-color_lightblue  = '\x1b[96m' # Difficulty Name (actually Cyan, kept for internal reasons)
-color_lightred   = '\x1b[91m' # (EXTREME)
-color_lightblack = '\x1b[90m' # Odyssey ID if no args are given
+# TODO: Everything
+
+def pretty_boss (a):
+	match a:
+		case 'bloonarius':     return "Bloonarius"
+		case 'lych':           return "Lych"
+		case 'vortex':         return "Vortex"
+		case 'dreadbloon':     return "Dreadbloon"
+		case 'phayze':         return "Phayze"
+		case 'blastapopoulos': return "Blastapopoulos"
+		case _:                return a
+
+def pretty_score (b):
+	match b:
+		case 'GameTime':   return "Timed"
+		case 'LeastCash':  return "Least Cash"
+		case 'LeastTiers': return "Least Tiers"
+		case _:            return b
 
 url_bosslist  = "https://data.ninjakiwi.com/btd6/bosses"
 
-def error_exit (
-	friendly_msg, # Friendly error message returned to print() function
-	error_msg='', # Technical error message
-	exit_code=1   # Optional Exit Code
-):
-	if error_msg != '':
-		maybe_error = "\nError: "
-	else:
-		maybe_error = ""
+def list_bosses ():
+	formatted_list = ""
 
-	print("{}{}{}{}{}\nArguments: {}".format(
-		color_lightred,
-		friendly_msg,
-		color_reset,
-		maybe_error,
-		error_msg,
-		sys.argv[1:]
-	))
-	sys.exit(exit_code)
+	for lists in load_json_url(url_bosslist)['body']:
+		my_boss = pretty_boss(lists['bossType'])
 
-def load_json_url (url):
-	try:
-		return json.loads(urllib.request.urlopen(url).read())
-	# mainly `urllib.error.URLError`, but can handle other exceptions
-	except Exception as e:
-		error_exit(
-			"Something went wrong while fetching {}".format(url),
-			e
+		formatted_list += "{}[{}]{} {} {}{}{} at {}\n\t{}{} - {}{}\n".format(
+			color_lightblack,
+			lists['id'],
+			color_reset,
+			pretty_score(lists['scoringType']) if lists['normalScoringType'] == lists['eliteScoringType'] else "Multi-Score",
+			color_bold,
+			my_boss,
+			color_reset,
+			pretty_map(load_json_url("{}/{}/metadata/standard".format(url_bosslist, lists['id']))['body']['map']),
+			color_lightblack,
+			# Convert the int to string, remove miliseconds from the time, then convert back to int.
+			datetime.datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			datetime.datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			color_reset
 		)
 
-def get_boss_scores (boss_id, boss_type):
+	print(formatted_list)
+
+def get_boss (boss_id):
+	boss_type = ""
+	bosses_list = load_json_url(url_bosslist)
+
+	for my_boss in bosses_list['body']:
+		if my_boss['id'] == boss_id:
+			boss_type = pretty_boss(my_boss['bossType'])
+	
+	metadata_normal = load_json_url("{}/{}/metadata/standard".format(url_bosslist, boss_id))['body']
+	metadata_elite = load_json_url("{}/{}/metadata/elite".format(url_bosslist, boss_id))['body']
+
+	print("{}{}{} on {}{}{}".format(
+		color_bold,
+		boss_type,
+		color_reset,
+		color_bold,
+		pretty_map(metadata_normal['map']),
+		color_reset
+	))
+	
+	difficulties = ['normal', 'elite']
+
+	for dif in difficulties:
+		score_normal = ""
+		score_elite = ""
+
+		for a in bosses_list['body']:
+			if a['id'] == boss_id:
+				score_normal = a['normalScoringType']
+				score_elite = a['eliteScoringType']
+				break
+
+		match dif:
+			case 'normal':
+				dif_print = "Normal"
+				dif_get = metadata_normal
+				dif_score = score_normal
+			case 'elite':
+				dif_print = "Elite"
+				dif_get = metadata_elite
+				dif_score = score_elite
+			case _:
+				# Sanity check
+				error_exit("Invalid difficulty")
+
+		if dif_get['leastCashUsed'] != -1:
+			is_least_type = " - Least Cash: ${}".format(dif_get['leastCashUsed'])
+		elif dif_get['leastTiersUsed'] != -1:
+			is_least_type = " - Least Tiers: {}".format(dif_get['leastTiersUsed'])
+		else:
+			is_least_type = ""
+
+		print("\n{}{}{} - {} - {}/{}{}".format(
+			color_bold,
+			dif_print,
+			color_reset,
+			pretty_score(dif_score),
+			dif_get['difficulty'],
+			dif_get['mode'],
+			is_least_type
+		))
+
+		tower_tulip   = [] # For sorting
+		tower_list    = "" # For display
+
+		for o, i in enumerate(dif_get['_towers']):
+			tower_tulip.insert(
+				o, [
+					i['tower'],                # [0]
+					i['max'],                  # [1]
+					i['path1NumBlockedTiers'], # [2]
+					i['path2NumBlockedTiers'], # [3]
+					i['path3NumBlockedTiers'], # [4]
+					i['isHero']                # [5]
+				])
+		new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
+
+		for q in new1:
+			if q[1] != 0:
+				is_restricted = ""
+				path_1 = ""
+				path_2 = ""
+				path_3 = ""
+				if q[2] != 0 or q[3] != 0 or q[4] != 0:
+					if q[2] == -1:
+						path_1 = 5
+					else:
+						path_1 = q[2]
+
+					if q[3] == -1:
+						path_2 = 5
+					else:
+						path_2 = q[3]
+					
+					if q[4] == -1:
+						path_3 = 5
+					else:
+						path_3 = q[4]
+
+					is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
+
+				if (q[1] == 1 and q[5] == True) or (q[1] == 99 and q[5] == True):
+					amount = ""
+				elif q[1] != -1:
+					amount = "{}x ".format(q[1])
+				else:
+					amount = ""
+
+				tower_list += ", {}{}{}".format(
+					amount,
+					pretty_tower(q[0]),
+					is_restricted
+				)
+
+		print(re.sub('^, ', '', tower_list))
+
+		if map_stats(dif_get) != "":
+			print(re.sub('^, ', '', map_stats(dif_get)), end='')
+		
+		if len(dif_get['roundSets']) > 2:
+			print(", CustomRounds={}".format(dif_get['roundSets'][2:]))
+		else:
+			print()
+
+def get_boss_scores (boss_id, boss_type, limit=50):
 	match boss_type:
 		case 'normal': difficulty = "standard"
 		case 'elite': difficulty = "elite"
 		case _: error_exit("Leaderboards only work if 'normal' or 'Elite' is supplied", '', 2)
 	
-	board_url = load_json_url("https://data.ninjakiwi.com/btd6/bosses/{}/leaderboard/{}/1".format(boss_id, difficulty))
+	# If too early
+	test_board = load_json_url("{}/{}/leaderboard/{}/1?page=1".format(url_bosslist, boss_id, difficulty))
 
-	if board_url['success'] == False:
-		error_exit("Either Boss event has not started yet or you queried the scores too early or the leaderboards have bugged", board_url['error'])
+	#print(test_board['body'][0]['scoreParts'][2]['name'])
 
-	for rank, tops in enumerate(board_url['body']):
-		score_table = []
+	if test_board['success'] == False:
+		error_exit("Either Boss event has not started yet or you queried the scores too early or the leaderboards have bugged", test_board['error'])
 
-		def get_scores ():
+	merged_scores = []
+	
+	if limit > 100:
+		error_exit(
+			"This script can only provide Top 100 leaderboard. This is to simulate the in-game Boss Leaderboard algorithm.",
+			exit_code=2
+		)
+	elif limit == 0:
+		error_exit(
+			"You are trying to print 0 scores. This is not logical!",
+			exit_code=2
+		)
 
-			scores = ""
+	for pager in range(1,5):
+		merged_scores += load_json_url("{}/{}/leaderboard/{}/1?page={}".format(url_bosslist, boss_id, difficulty, pager))['body']
+	
+	score_array = []
+	type_headers = ""
 
-			# Least Cash
-			# Appears to be always there, check on Saturday
-			if tops['scoreParts'][1]['name'] == "Least Cash":
-				scores += " LeastCash={}".format(tops['scoreParts'][1]['score'])
-			# Least Tiers
-			elif tops['scoreParts'][1]['name'] == "Tier Count":
-				scores += " Tiers={}".format(tops['scoreParts'][1]['score'])
-			
-			# Time Spent
-			scores += " Time={}s".format(round(tops['scoreParts'][2]['score'] / 100000, 2))
+	# https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
+	# With modifications by vitalkanev
+	def fmttime(millisecs):
+		secs = millisecs / 1000.0
+		d = datetime.timedelta(seconds=secs)
+		t = (datetime.datetime.min + d).time()
+		milli = t.strftime('%f')[:3]
+		value = t.strftime('%H:%M:%S.') + milli
+		return value
 
-			return scores
+	if test_board['body'][0]['scoreParts'][1]['name'] == "Tier Count":
+		type_headers = "Tiers"
+	elif test_board['body'][0]['scoreParts'][1]['name'] == "Least Cash":
+		type_headers = "Cash"
 
-		print("{}. {} BossTier={}{}".format(rank+1, tops['displayName'], tops['scoreParts'][0]['score'], get_scores()))
+	for pos, score in enumerate(merged_scores):
+		score_array.insert(pos, [
+			pos+1,
+			score['displayName'],
+			score['scoreParts'][1]['score'],
+			score['scoreParts'][0]['score'],
+			fmttime(score['scoreParts'][2]['score'])[3:]
+		])
 
-
-def list_bosses ():
-	for lists in load_json_url(url_bosslist)['body']:
-		match lists['bossType']:
-			case 'bloonarius':     my_boss = "Bloonarius"
-			case 'lych':           my_boss = "Lych"
-			case 'vortex':         my_boss = "Vortex"
-			case 'dreadbloon':     my_boss = "Dreadbloon"
-			case 'blastapopoulos': my_boss = "Blastapopoulos"
-			case _:                my_boss = lists['bossType']
-
-		match lists['scoringType']:
-			case 'GameTime':   score_type = "Timed"
-			case 'LeastCash':  score_type = "Least Cash"
-			case 'LeastTiers': score_type = "Least Tiers"
-			case _:            score_type = lists['scoringType']
-
-		# Happened a few times
-		if lists['normalScoringType'] != lists['eliteScoringType']:
-			score_type = "Multi-score"
-
-		print("{}[{}]{} {} {}{}{}\n\t{}{} - {}{}".format(
-			color_lightblack,
-			lists['id'],
-			color_reset,
-			score_type,
-			color_bold,
-			my_boss,
-			color_reset,
-			color_lightblack,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			color_reset
-		))
+	print(tabulate(score_array[0:limit], tablefmt='github', headers=[
+		"Rank",
+		"Username",
+		type_headers,
+		"Boss Tiers",
+		"Time"
+	]))
 
 
 if __name__ == "__main__":
 	if len(sys.argv) == 3:
 		get_boss_scores(sys.argv[1], sys.argv[2])
+	elif len(sys.argv) == 4:
+		get_boss_scores(sys.argv[1], sys.argv[2], int(sys.argv[3]))
 	elif sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
 		# TODO: See print() here!
 		print("TODO: Implement Help")
 		sys.exit(0)
 	elif len(sys.argv) == 2:
-		# TODO: See print() here!
-		print("TODO: Implement Boss Info!")
+		get_boss(sys.argv[1])
 	elif len(sys.argv) == 1:
 		list_bosses()
 else:
