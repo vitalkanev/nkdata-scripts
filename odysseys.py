@@ -17,8 +17,6 @@
 # Version CINQ of the Odysseys script:
 # - _common!!!
 # - Functions!!!
-script_type = "odyssey"
-
 from datetime import datetime
 import sys
 import re
@@ -177,7 +175,12 @@ def get_odyssey (id):
 			else:
 				map_mode = maps['mode']
 
-			one_map = "{}. {}{}{}, {}/{}, ${}, r{}/{},{}".format(
+			if len(maps['roundSets']) > 1:
+				custom_rounds = ", CustomRounds={}".format(maps['roundSets'][1:])
+			else:
+				custom_rounds = ""
+
+			one_map = "{}. {}{}{}, {}/{}, ${}, r{}/{},{}{}".format(
 				num+1,
 				color_bold,
 				pretty_map(maps['map']),
@@ -187,7 +190,8 @@ def get_odyssey (id):
 				maps['startingCash'],
 				maps['startRound'],
 				maps['endRound'],
-				map_stats(maps)
+				map_stats(maps),
+				custom_rounds
 			)
 			
 			if map_stats(maps) == "":

@@ -3,8 +3,6 @@ import sys
 import urllib.request
 import json
 
-script_type = "shared"
-
 # Colors
 color_reset      = '\x1b[0m'  
 color_bold       = '\x1b[1m'
@@ -252,9 +250,9 @@ def map_stats (my_map):
 
 	if my_map['leastTiersUsed'] == True:
 		stats += ", Least Tiers: {}".format(my_map['leastTiersUsed'])
-	
-	if (script_type == "odyssey" and len(my_map['roundSets']) > 1) or (script_type == "boss" and len(my_map['roundSets']) > 2):
-		# This will print as CustomRounds=['...']
-		stats += ", CustomRounds={}".format(my_map['roundSets'][1:])
+
+	# if (script_type == "odyssey" and len(my_map['roundSets']) > 1) or (script_type == "boss" and len(my_map['roundSets']) > 2):
+	# 	# This will print as CustomRounds=['...']
+	# 	stats += ", CustomRounds={}".format(my_map['roundSets'][1:])
 
 	return stats
