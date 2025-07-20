@@ -129,14 +129,26 @@ def get_boss (boss_id):
 		else:
 			is_least_type = ""
 
-		print("\n{}{}{} - {} - {}/{}{}".format(
+		print("\n{}{}{} - {} - {}/{}{}\n{}Starting Round:{} {}\n{}Cash:{} ${}\n{}Lives:{} {}\n{}Max Paragons:{} {}".format(
 			color_bold,
 			dif_print,
 			color_reset,
 			pretty_score(dif_score),
 			dif_get['difficulty'],
 			dif_get['mode'],
-			is_least_type
+			is_least_type,
+			color_bold,
+			color_reset,
+			dif_get['startRound'],
+			color_bold,
+			color_reset,
+			dif_get['startingCash'],
+			color_bold,
+			color_reset,
+			dif_get['lives'],
+			color_bold,
+			color_reset,
+			dif_get['maxParagons'] if dif_get['maxParagons'] > 0 else "None"
 		))
 
 		tower_tulip   = [] # For sorting
@@ -199,13 +211,13 @@ def get_boss (boss_id):
 		if len(dif_get['roundSets']) > 2:
 			print(", CustomRounds={}".format(dif_get['roundSets'][2:]))
 		else:
-			print()
+			print(end='')
 
 def get_boss_scores (boss_id, boss_type, limit=50):
 	match boss_type:
 		case 'normal': difficulty = "standard"
 		case 'elite': difficulty = "elite"
-		case _: error_exit("Leaderboards only work if 'normal' or 'Elite' is supplied", '', 2)
+		case _: error_exit("Leaderboards only work if 'normal' or 'elite' is supplied", '', 2)
 	
 	try:
 		limit = int(limit)
@@ -260,7 +272,7 @@ def get_boss_scores (boss_id, boss_type, limit=50):
 			score['scoreParts'][0]['score'],
 			fmttime(score['scoreParts'][2]['score'])[3:]
 		])
-
+	
 	print(tabulate(score_array[0:limit], tablefmt='github', headers=[
 		"Rank",
 		"Username",
