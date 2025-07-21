@@ -1,16 +1,25 @@
 # Common stuff shared between all three scripts.
 import sys
+import os
 import urllib.request
 import json
 import datetime
 
 # Colors
-color_reset      = '\x1b[0m'  
-color_bold       = '\x1b[1m'
-color_italic     = '\x1b[3m'
-color_lightblue  = '\x1b[96m'
-color_lightred   = '\x1b[91m'
-color_lightblack = '\x1b[90m'
+if os.getenv('NO_COLOURS') != None:
+	color_reset      = ''
+	color_bold       = ''
+	color_italic     = ''
+	color_lightblue  = ''
+	color_lightred   = ''
+	color_lightblack = ''
+else:
+	color_reset      = '\x1b[0m'  
+	color_bold       = '\x1b[1m'
+	color_italic     = '\x1b[3m'
+	color_lightblue  = '\x1b[96m'
+	color_lightred   = '\x1b[91m'
+	color_lightblack = '\x1b[90m'
 
 # Error Exit
 def error_exit (

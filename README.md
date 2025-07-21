@@ -7,7 +7,7 @@ This repository contains scripts that communicate with the [Ninja Kiwi Open Data
 
 ## Requirements
 
-These script require a **colour terminal** to pretty-display all the information. A non-colour version will be implemented soon™
+These script require a **colour terminal** to pretty-display all the information. If you want to not display any colours (i.e. your terminal doesn't support it), set `NO_COLOURS` environment variable to any value or, if you are under Linux, append `NO_COLOURS=...` before the command.
 
 These scripts require Python 3.10 and newer because these scripts depend on [the new `match` and `case` operators introduced in Python 3.10](https://docs.python.org/3/whatsnew/3.10.html#pep-634-structural-pattern-matching).
 
