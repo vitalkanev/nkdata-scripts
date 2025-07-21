@@ -16,7 +16,7 @@ Interacts with BTD6 Races endpoint of the Open Data API.
 This script has three modes:
 1. When no argument is passed, display all Race events currently available: the internal Race ID, the Race name, the map where the Race is taking place and start/end times
 2. When a **Race ID** argument is passed to the script, display information for that Race
-3. When both **Odyssey ID** and **a number between 1 and 100** are passed to the script, display Top X leaderboard for that Race (where X = number supplied as a second argument)
+3. When both **Race ID** and **a number between 1 and 100** are passed to the script, display Top X leaderboard for that Race (where X = number supplied as a second argument)
 
 ### `bosses.py`
 Interacts with BTD6 Bosses endpoint of the Open Data API.
