@@ -102,39 +102,46 @@ def get_odyssey (id):
 
 		for q in new1:
 			is_restricted = ""
-			path_1 = ""
-			path_2 = ""
-			path_3 = ""
-			if q[2] != 0 or q[3] != 0 or q[4] != 0:
-				if q[2] == -1:
-					path_1 = 5
+			if q[1] != 0:
+				path_1 = ""
+				path_2 = ""
+				path_3 = ""
+				if q[2] != 0 or q[3] != 0 or q[4] != 0:
+					if q[2] == -1:
+						path_1 = 0
+					elif q[2] == 0:
+						path_1 = 5
+					else:
+						path_1 = 5 - q[2]
+
+					if q[3] == -1:
+						path_2 = 0
+					elif q[3] == 0:
+						path_2 = 5
+					else:
+						path_2 = 5 - q[3]
+					
+					if q[4] == -1:
+						path_3 = 0
+					elif q[4] == 0:
+						path_3 = 5
+					else:
+						path_3 = 5 - q[4]
+
+					is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
+
+				if q[1] == 1 and q[5] == True:
+					amount = ""
+				elif q[1] != -1:
+					amount = "{}x ".format(q[1])
 				else:
-					path_1 = q[2]
+					amount = ""
 
-				if q[3] == -1:
-					path_2 = 5
-				else:
-					path_2 = q[3]
-				
-				if q[4] == -1:
-					path_3 = 5
-				else:
-					path_3 = q[4]
-
-				is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
-
-			if q[1] == 1 and q[5] == True:
-				amount = ""
-			elif q[1] != -1:
-				amount = "{}x ".format(q[1])
-			else:
-				amount = ""
-
-			tower_list += ", {}{}{}".format(
-				amount,
-				pretty_tower(q[0]),
-				is_restricted
-			)
+				tower_list += ", {}{}{}".format(
+					amount,
+					pretty_tower(q[0]),
+					is_restricted
+				)
 
 		# HACK
 		if tower_list.startswith(", Quincy, Gwendolin, Jones, Obyn, Rosalia, Churchill, Benjamin, Pat, Ezili, Adora, Etienne, Sauda, Brickell, Psi, Geraldo, Corvus,"):

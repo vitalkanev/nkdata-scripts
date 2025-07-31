@@ -121,7 +121,6 @@ def get_race (race_id):
 			path_1 = ""
 			path_2 = ""
 			path_3 = ""
-			# HACK: Race API specifically returns weird tower restrictions. This will figure it out.
 			if q[2] != 0 or q[3] != 0 or q[4] != 0:
 				if q[2] == -1:
 					path_1 = 0
