@@ -214,6 +214,9 @@ def fmttime(millisecs):
 
 def map_stats (my_map):
 	stats = ""
+
+	if my_map['maxTowers'] != 9999:
+		stats += ", {} Towers".format(my_map['maxTowers'])
 	
 	if my_map['_bloonModifiers']['allCamo'] == True:
 		stats += ", AllCamo"
