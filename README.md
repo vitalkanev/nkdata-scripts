@@ -54,6 +54,9 @@ The following features are currently not implemented in this repository, but the
 * Challenges
   - Daily, Advanced and Co-op Challenges
   - User Challenges
+* User Maps
+  - Trending, Most Liked and Newest list
+  - Information about the map
 * Everything BTDB2 related
   - ~~Season listing (which I use to calculate when the next major update comes out...)~~ DONE!
   - ~~Hall of Masters Leaderboard~~ DONE!
