@@ -58,7 +58,7 @@ def list_bosses ():
 	for lists in load_json_url(url_bosslist)['body']:
 		my_boss = pretty_boss(lists['bossType'])
 
-		formatted_list += "{}[{}]{} {} {}{}{} at {}\n\t{}{} - {}{}\n".format(
+		formatted_list += "{}[{}]{} {} {}{}{} on {}\n\t{}{} - {}{}\n".format(
 			color_lightblack,
 			lists['id'],
 			color_reset,
@@ -166,26 +166,32 @@ def get_boss (boss_id):
 		new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
 
 		for q in new1:
+			is_restricted = ""
 			if q[1] != 0:
-				is_restricted = ""
 				path_1 = ""
 				path_2 = ""
 				path_3 = ""
 				if q[2] != 0 or q[3] != 0 or q[4] != 0:
 					if q[2] == -1:
+						path_1 = 0
+					elif q[2] == 0:
 						path_1 = 5
 					else:
-						path_1 = q[2]
+						path_1 = 5 - q[2]
 
 					if q[3] == -1:
+						path_2 = 0
+					elif q[3] == 0:
 						path_2 = 5
 					else:
-						path_2 = q[3]
+						path_2 = 5 - q[3]
 					
 					if q[4] == -1:
+						path_3 = 0
+					elif q[4] == 0:
 						path_3 = 5
 					else:
-						path_3 = q[4]
+						path_3 = 5 - q[4]
 
 					is_restricted = " ({}-{}-{})".format(path_1, path_2, path_3)
 
@@ -210,7 +216,7 @@ def get_boss (boss_id):
 		if len(dif_get['roundSets']) > 2:
 			print(", CustomRounds={}".format(dif_get['roundSets'][2:]))
 		else:
-			print(end='')
+			print()
 
 def get_boss_scores (boss_id, boss_type, limit=50):
 	match boss_type:
@@ -276,7 +282,7 @@ if __name__ == "__main__":
 		get_boss_scores(sys.argv[1], sys.argv[2])
 	elif len(sys.argv) == 4:
 		get_boss_scores(sys.argv[1], sys.argv[2], sys.argv[3])
-	elif sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
+	elif sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 3:
 		print_help()
 	elif len(sys.argv) == 2:
 		get_boss(sys.argv[1])
