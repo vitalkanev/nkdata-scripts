@@ -68,9 +68,8 @@ def list_bosses ():
 			color_reset,
 			pretty_map(load_json_url("{}/{}/metadata/standard".format(url_bosslist, lists['id']))['body']['map']),
 			color_lightblack,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			pretty_event_time(lists['start']),
+			pretty_event_time(lists['end']),
 			color_reset
 		)
 

@@ -49,9 +49,8 @@ def list_races ():
 			pretty_map(load_json_url("{}/{}/metadata".format(url_racelist, races_list['id']))['body']['map']),
 			color_reset,
 			color_lightblack,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.datetime.fromtimestamp(int(str(races_list['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.datetime.fromtimestamp(int(str(races_list['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			pretty_event_time(races_list['start']),
+			pretty_event_time(races_list['end']),
 			color_reset
 		)
 

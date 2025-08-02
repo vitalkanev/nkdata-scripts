@@ -36,9 +36,8 @@ def list_seasons ():
 			seasons['totalScores'],
 			'scores' if ((seasons['totalScores'] > 1) or (seasons['totalScores'] == 0)) else 'score',
 			color_lightblack,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.datetime.fromtimestamp(int(str(seasons['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.datetime.fromtimestamp(int(str(seasons['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
+			pretty_event_time(seasons['start']),
+			pretty_event_time(seasons['end']),
 			color_reset
 		)
 	

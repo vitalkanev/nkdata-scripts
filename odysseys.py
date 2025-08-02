@@ -28,9 +28,8 @@ def list_odysseys ():
 			color_italic,
 			lists['description'],
 			color_reset,
-			# Convert the int to string, remove miliseconds from the time, then convert back to int.
-			datetime.datetime.fromtimestamp(int(str(lists['start'])[:-3])).strftime('%d/%m/%Y %H:%M:%S'),
-			datetime.datetime.fromtimestamp(int(str(lists['end'])[:-3])).strftime('%d/%m/%Y %H:%M:%S')
+			pretty_event_time(lists['start']),
+			pretty_event_time(lists['end'])
 		))
 
 def get_odyssey (id):

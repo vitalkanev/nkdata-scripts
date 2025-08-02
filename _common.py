@@ -54,6 +54,9 @@ def load_json_url (url):
 			e
 		)
 
+def pretty_event_time (time, format='%d/%m/%Y %H:%M:%S'):
+	return datetime.datetime.fromtimestamp(int(time / 1000)).strftime(format)
+
 def pretty_tower (a_tower):
 	match a_tower:
 		### HEROES ###
