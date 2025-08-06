@@ -149,12 +149,11 @@ def get_boss (boss_id):
 			dif_get['maxParagons'] if dif_get['maxParagons'] > 0 else "None"
 		))
 
-		tower_tulip   = [] # For sorting
+		towers_tuple  = [] # For sorting
 		tower_list    = "" # For display
 
-		for o, i in enumerate(dif_get['_towers']):
-			tower_tulip.insert(
-				o, [
+		for i in dif_get['_towers']:
+			towers_tuple.append([
 					i['tower'],                # [0]
 					i['max'],                  # [1]
 					i['path1NumBlockedTiers'], # [2]
@@ -162,9 +161,8 @@ def get_boss (boss_id):
 					i['path3NumBlockedTiers'], # [4]
 					i['isHero']                # [5]
 				])
-		new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
-
-		for q in new1:
+			
+		for q in sorted(set(map(tuple, towers_tuple)), key=lambda val: tower_sort_order[val[0]]):
 			is_restricted = ""
 			if q[1] != 0:
 				path_1 = ""

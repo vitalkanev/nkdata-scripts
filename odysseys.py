@@ -42,10 +42,8 @@ def get_odyssey (id):
 			# 	print('{}-{}'.format(color_bold, color_reset), end='')
 			# print()
 			print(my_odyssey['description'] + "\n")
-		
-	odyssey_difficulties = ['easy', 'medium', 'hard']
 	
-	for dif in odyssey_difficulties:
+	for dif in ['easy', 'medium', 'hard']:
 
 		per_difficulty = load_json_url('{}/{}/{}'.format(url_odysseylist, id, dif))
 		map_list = load_json_url('{}/{}/{}/maps'.format(url_odysseylist, id, dif))
@@ -82,13 +80,12 @@ def get_odyssey (id):
 			body['maxMonkeysOnBoat']
 		))
 
-		tower_tulip   = [] # For sorting
+		towers_tuple  = [] # For sorting
 		tower_list    = "" # For display
 		amount        = "" # Optional
-	
-		for o, i in enumerate(body['_availableTowers']):
-			tower_tulip.insert(
-				o, [
+
+		for i in body['_availableTowers']:
+			towers_tuple.append( [
 					i['tower'],                # [0]
 					i['max'],                  # [1]
 					i['path1NumBlockedTiers'], # [2]
@@ -96,10 +93,8 @@ def get_odyssey (id):
 					i['path3NumBlockedTiers'], # [4]
 					i['isHero']                # [5]
 				])
-
-		new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
-
-		for q in new1:
+		
+		for q in sorted(set(map(tuple, towers_tuple)), key=lambda val: tower_sort_order[val[0]]):
 			is_restricted = ""
 			if q[1] != 0:
 				path_1 = ""

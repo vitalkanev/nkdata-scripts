@@ -98,13 +98,12 @@ def get_race (race_id):
 		race_info['lives']
 	))
 
-	tower_tulip   = [] # For sorting
+	towers_tuple  = [] # For sorting
 	tower_list    = "" # For display
 	amount        = "" # Optional
 
-	for o, i in enumerate(race_info['_towers']):
-		tower_tulip.insert(
-			o, [
+	for i in race_info['_towers']:
+		towers_tuple.append([
 				i['tower'],                # [0]
 				i['max'],                  # [1]
 				i['path1NumBlockedTiers'], # [2]
@@ -112,9 +111,8 @@ def get_race (race_id):
 				i['path3NumBlockedTiers'], # [4]
 				i['isHero']                # [5]
 			])
-	new1 = sorted(tower_tulip, key=lambda val: tower_sort_order[val[0]])
-
-	for q in new1:
+		
+	for q in sorted(set(map(tuple, towers_tuple)), key=lambda val: tower_sort_order[val[0]]):
 		is_restricted = ""
 		if q[1] != 0:
 			path_1 = ""
