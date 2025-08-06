@@ -48,7 +48,7 @@ For leaderboard display in `races.py`, `bosses.py` and `b2_seasons.py`, you must
 The following features are currently not implemented in this repository, but they will be implemented in the near future:
 
 * Contested Territory
-  - Tile Information
+  - ~~Tile Information~~
   - Player Leaderboard
   - Team Leaderboard
 * Challenges
