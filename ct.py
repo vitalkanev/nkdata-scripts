@@ -6,7 +6,7 @@ from _common import *
 try:
 	from tabulate import tabulate
 except:
-	if len(sys.argv) == 3:
+	if 3 <= len(sys.argv) <= 4:
 		print("{}Please install the 'tabulate' module for tile display and leaderboard support.{}\nThis is usually done by simply running 'pip install tabulate'.\nOn Linux you might want to create a virtual environment first, then run pip and python from the venv folder (or install pipx and run 'pipx install tabulate' - this will create a virtual environment automatically).".format(color_bold, color_reset))
 		sys.exit(3)
 	else:
@@ -79,33 +79,93 @@ def list_tiles (ct_id):
 
 	print(tabulate(tiles_table, tablefmt='github', headers=["ID", "Tile Type", "Relic", "Game Type"]))
 
-def player_leaderboard (ct_id):
-	# TODO
-	print("Players Board")
+def player_leaderboard (ct_id, limit=50):
+	player_board_url = "{}/{}/leaderboard/player".format(url_ctbase, ct_id)
+	merged_scores = []
+	score_array = []
+	
+	for pager in range(1,5):
+		merged_scores += load_json_url("{}?page={}".format(player_board_url, pager))['body']
 
-def team_leaderboard (ct_id):
-	# TODO
-	print("Teams Board")
+	for pos, i in enumerate(merged_scores):
+		score_array.append([
+			pos+1,
+			i['displayName'],
+			i['score']
+		])
+	
+	try:
+		limit = int(limit)
+	except:
+		error_exit("The top scores argument must be between 1 and 100", exit_code=4)
 
-def arg_handler (ct_id, event=''):
+	if limit > 100:
+		error_exit(
+			"This script can only provide Top 100 leaderboard. This is to simulate the in-game leaderboard algorithm.",
+			exit_code=2
+		)
+	elif limit == 0:
+		error_exit(
+			"You are trying to print 0 scores. This is not logical!",
+			exit_code=2
+		)
+
+	print(tabulate(score_array[0:limit], tablefmt='github', headers=["Rank", "Username", "Points"]))
+
+def team_leaderboard (ct_id, limit=50):
+	team_board_url = "{}/{}/leaderboard/team".format(url_ctbase, ct_id)
+	merged_scores = []
+	score_array = []
+	
+	for pager in range(1,5):
+		merged_scores += load_json_url("{}?page={}".format(team_board_url, pager))['body']
+
+	for pos, i in enumerate(merged_scores):
+		score_array.append([
+			pos+1,
+			i['displayName'],
+			i['score']
+		])
+	
+	try:
+		limit = int(limit)
+	except:
+		error_exit("The top scores argument must be between 1 and 100", exit_code=4)
+
+	if limit > 100:
+		error_exit(
+			"This script can only provide Top 100 leaderboard. This is to simulate the in-game leaderboard algorithm.",
+			exit_code=2
+		)
+	elif limit == 0:
+		error_exit(
+			"You are trying to print 0 scores. This is not logical!",
+			exit_code=2
+		)
+
+	print(tabulate(score_array[0:limit], tablefmt='github', headers=["Rank", "Team Name", "Points"]))
+
+def arg_handler (ct_id, event='', limit=50):
 	sanity_url = load_json_url("{}/{}/tiles".format(url_ctbase, ct_id))
 	if sanity_url['success'] == False:
 		error_exit("You have provided an ID for a CT event that doesn't exist. It might have been archived.", sanity_url['error'])
 	else:
 		match event:
 			case 'tiles':   list_tiles(ct_id)
-			case 'players': player_leaderboard(ct_id)
-			case 'teams':   team_leaderboard(ct_id)
+			case 'players': player_leaderboard(ct_id, limit)
+			case 'teams':   team_leaderboard(ct_id, limit)
 			case _:         error_exit("Please specify either 'tiles', 'players' or 'teams' to access information about the CT event.")
 	
 
 if __name__ == "__main__":
-	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 3:
+	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 4:
 		print_help()
 	if len(sys.argv) == 2:
 		arg_handler(sys.argv[1])
-	elif len(sys.argv) > 1:
+	elif len(sys.argv) == 3:
 		arg_handler(sys.argv[1], sys.argv[2])
+	elif len(sys.argv) == 4:
+		arg_handler(sys.argv[1], sys.argv[2], sys.argv[3])
 	else:
 		list_ct_events()
 else:
