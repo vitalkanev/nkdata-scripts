@@ -15,6 +15,7 @@ script will display all Odysseys available in Ninja Kiwi Data API.
 
 This script is not affiliated with Ninja Kiwi and/or their partners.
 Script developed by vitalkanev""".format( color_bold, color_reset ))
+	sys.exit()
 
 def list_odysseys ():
 	for lists in load_json_url(url_odysseylist)['body']:
@@ -37,10 +38,12 @@ def get_odyssey (id):
 	for my_odyssey in odysseys_list['body']:
 		if my_odyssey['id'] == id:
 			print(color_bold + my_odyssey['name'] + color_reset)
-			# # Uncomment these lines to re-enable the header
-			# for l in range(0, len(my_odyssey['name']) + 1):
-			# 	print('{}-{}'.format(color_bold, color_reset), end='')
-			# print()
+			
+			if os.getenv('ODYSSEY_HEADER') != None:
+				for l in range(0, len(my_odyssey['name']) + 1):
+					print('{}-{}'.format(color_bold, color_reset), end='')
+				print()
+			
 			print(my_odyssey['description'] + "\n")
 	
 	for dif in ['easy', 'medium', 'hard']:
@@ -215,16 +218,9 @@ def get_odyssey (id):
 
 		print("Reward: {}\n".format(reward()))
 
-# Sanity Check
-# if __name__ != '__main__':
-# 	print("Importing this script as a module is not supported. Exiting this Python instance...")
-# sys.exit(40)
-
 if __name__ == "__main__":
-	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"]:
-		# If executed with one of these options, show a small help message
+	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 2:
 		print_help()
-		sys.exit()
 	elif sys.argv[1:]:
 		get_odyssey(sys.argv[1])
 	else:
