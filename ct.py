@@ -15,6 +15,7 @@ except:
 url_ctbase = "https://data.ninjakiwi.com/btd6/ct"
 
 def pretty_relic (relic):
+	# Too many relics to handle via match-case, use Regex instead....
 	# https://stackoverflow.com/a/199126
 	return re.sub(r'([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))', r'\1 ', relic)
 
@@ -22,7 +23,7 @@ def print_help ():
 	print("TODO: Help")
 	sys.exit()
 
-def list_cts ():
+def list_ct_events ():
 	for lists in load_json_url(url_ctbase)['body']:
 		print("{}[{}]{} {} - {}\n\t{}{} teams, {} players{}".format(
 			color_lightblack,
@@ -41,10 +42,6 @@ def list_cts ():
 def list_tiles (ct_id):
 	url_tiles = load_json_url("{}/{}/tiles".format(url_ctbase, ct_id))
 	tiles_table = []
-
-	# Sanity Check
-	if url_tiles['success'] == False:
-		error_exit("You have provided an ID for a CT event that doesn't exist. It might have been archived.", url_tiles['error'])
 
 	for t in url_tiles['body']['tiles']:
 		tile_type   = ""
@@ -91,28 +88,26 @@ def team_leaderboard (ct_id):
 	print("Teams Board")
 
 def arg_handler (ct_id, event=''):
-	for x in load_json_url(url_ctbase)['body']:
-		if x['id'] == ct_id:
-			match event:
-				case 'tiles':   list_tiles(ct_id)
-				case 'players': player_leaderboard(ct_id)
-				case 'teams':   team_leaderboard(ct_id)
-				case _:         print("This specific event was held from {} to {}\n{}Please specify either 'tiles', 'players' or 'teams' to access information about the CT event.{}".format(pretty_event_time(x['start']), pretty_event_time(x['end']), color_bold, color_reset))
-			break
+	sanity_url = load_json_url("{}/{}/tiles".format(url_ctbase, ct_id))
+	if sanity_url['success'] == False:
+		error_exit("You have provided an ID for a CT event that doesn't exist. It might have been archived.", sanity_url['error'])
 	else:
-		error_exit("This specific CT doesn't exist")
+		match event:
+			case 'tiles':   list_tiles(ct_id)
+			case 'players': player_leaderboard(ct_id)
+			case 'teams':   team_leaderboard(ct_id)
+			case _:         error_exit("Please specify either 'tiles', 'players' or 'teams' to access information about the CT event.")
+	
 
 if __name__ == "__main__":
 	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 3:
 		print_help()
 	if len(sys.argv) == 2:
 		arg_handler(sys.argv[1])
-	#if len(sys.argv) == 2:
-	#	error_exit("Please specify either 'tiles', 'players' or 'teams' to access information about the CT event.")
 	elif len(sys.argv) > 1:
 		arg_handler(sys.argv[1], sys.argv[2])
 	else:
-		list_cts()
+		list_ct_events()
 else:
 	print("Can't import this script as module.")
 	sys.exit(40)
