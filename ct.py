@@ -20,7 +20,27 @@ def pretty_relic (relic):
 	return re.sub(r'([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))', r'\1 ', relic)
 
 def print_help ():
-	print("TODO: Help")
+	print("""Use this script to display Contested Territory events
+from Bloons TD 6, a video game developed and presented by Ninja Kiwi.
+
+This script allows multiple optional arguments:
+1. Display a list of tiles from specific CT event
+   $ python ct.py [ct_id] tiles
+2. Display Top 50 Teams leaderboard for specific CT Event:
+   $ python ct.py [ct_id] teams
+3. Display Top X Teams leaderboard for specific CT Event:
+   $ python ct.py [ct_id] teams [1-100]
+4. Display Top 50 Players leaderboard for specific CT Event:
+   $ python ct.py [ct_id] players
+5. Display Top 50 Players leaderboard for specific CT Event:
+   $ python ct.py [ct_id] players [1-100]
+
+When no arguments are given, displays list of all Contested Territory
+Events currently available.
+
+This script is not affiliated with Ninja Kiwi and/or their partners.
+Script developed by vitalkanev
+""")
 	sys.exit()
 
 def list_ct_events ():

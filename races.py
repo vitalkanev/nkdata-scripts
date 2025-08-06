@@ -23,9 +23,9 @@ a video game developed and presented by Ninja Kiwi.
 
 This script allows multiple optional arguments:
 1. Display information about specific Race Event:
-   $ python bosses.py [race_id]
+   $ python races.py [race_id]
 2. Display Top X leaderboard for specific Race Event:
-   $ python bosses.py [race_id] [1-100]
+   $ python races.py [race_id] [1-100]
 
 When no arguments are given, displays list of all Race Events
 currently available.

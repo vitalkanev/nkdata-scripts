@@ -18,7 +18,21 @@ except:
 url_seasonlist = "https://data.ninjakiwi.com/battles2/homs"
 
 def print_help ():
-	print("TODO: Implement Help")
+	print("""Use this script to display Ranked Seasons from Bloons TD Battles 2,
+a video game developed and presented by Ninja Kiwi.
+
+This script allows multiple optional arguments:
+1. Display Top 50 leaderboard for a specific Season:
+   $ python b2_seasons.py [season_number]
+2. Display Top X leaderboard for a specific Season:
+   $ python b2_seasons.py [season_number] [1-100]
+
+When no arguments are given, displays list of all Seasons
+currently available.
+
+This script is not affiliated with Ninja Kiwi and/or their partners.
+Script developed by vitalkanev
+""")
 	sys.exit()
 
 def list_seasons ():

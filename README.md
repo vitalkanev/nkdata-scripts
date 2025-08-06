@@ -27,6 +27,17 @@ This script has four modes:
 3. When both **Boss ID** and **Boss Difficulty (`normal` or `elite`)** arguments are passed to the script, display Top 50 leaderboard for that Boss Difficulty
 4. When **Boss ID**, **Boss Difficulty (`normal` or `elite`)** and **a number between 1 and 100** arguments are passed to the script, display Top X leaderboard for that Boss Difficulty (where X = number supplied as a third argument)
 
+### `ct.py`
+Interacts with BTD6 Contested Territory endpoint of the Open Data API.
+
+This script has six modes:
+1. When no argument is passed, display all CT Events currently available: the internal CT ID, start/end times, number of teams and players who played this event in Competitive Mode
+2. When **CT ID** and **`tiles`** are passed to the script, display a table of all tiles for that CT event
+3. When **CT ID** and **`players`** are passed to the script, display Top 50 Players leaderboard for that CT event
+4. When **CT ID**, **`players`** and **a number between 1 and 100** are passed to the script, display Top X Players leaderboard for that CT event (where X = number supplied as a third argument)
+5. When **CT ID** and **`teams`** are passed to the script, display Top 50 Teams leaderboard for that CT event
+6. When **CT ID**, **`teams`** and **a number between 1 and 100** are passed to the script, display Top X Teams leaderboard for that CT event (where X = number supplied as a third argument)
+
 ### `b2_seasons.py`
 Interacts with BTDB2 HOM endpoint of the Open Data API.
 
