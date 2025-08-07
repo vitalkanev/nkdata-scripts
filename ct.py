@@ -180,7 +180,7 @@ def arg_handler (ct_id, event='', limit=50):
 if __name__ == "__main__":
 	if sys.argv[1:] == ["help"] or sys.argv[1:] == ["--help"] or sys.argv[1:] == ["-?"] or sys.argv[1:] == ["-h"] or sys.argv[1:] == ["?"] or len(sys.argv) > 4:
 		print_help()
-	if len(sys.argv) == 2:
+	elif len(sys.argv) == 2:
 		arg_handler(sys.argv[1])
 	elif len(sys.argv) == 3:
 		arg_handler(sys.argv[1], sys.argv[2])
