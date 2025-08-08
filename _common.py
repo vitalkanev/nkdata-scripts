@@ -202,7 +202,9 @@ tower_sort_order = {
     'SpikeFactory': 38,
     'MonkeyVillage': 39,
     'EngineerMonkey': 40,
-    'BeastHandler': 41
+    'BeastHandler': 41,
+	##### DEBUG: Will be promoted later
+	'Silas': 42
 }
 
 # https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
