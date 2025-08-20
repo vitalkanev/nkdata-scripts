@@ -57,7 +57,7 @@ def list_ct_events ():
 			color_reset
 		))
 	
-	print("{}\nTo get information about a specific event, add the ID inside the square brackets, followed by either 'tiles', 'players' or 'teams'.".format(color_italic, color_reset))
+	print("{}\nTo get information about a specific event, add the ID inside the square brackets, followed by either 'tiles', 'players' or 'teams'.{}".format(color_italic, color_reset))
 
 def list_tiles (ct_id):
 	url_tiles = load_json_url("{}/{}/tiles".format(url_ctbase, ct_id))
