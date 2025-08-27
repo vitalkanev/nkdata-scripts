@@ -192,14 +192,13 @@ def get_odyssey (id):
 			elif body['_rewards'][1].startswith("InstaMonkey:"):
 				my_insta = body['_rewards'][1].replace("InstaMonkey:", "").split(',')
 
-				insta_tower = pretty_tower(my_insta[0])
 				ip = list(my_insta[1])
 
 				return "{}-{}-{} {}".format(
 					ip[0],
 					ip[1],
 					ip[2],
-					insta_tower
+					pretty_tower(my_insta[0])
 				)
 			elif body['_rewards'][1].startswith("Power:"):
 				my_power = body['_rewards'][1].replace("Power:", "")
