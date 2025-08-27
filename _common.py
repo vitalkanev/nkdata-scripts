@@ -115,6 +115,7 @@ def pretty_map (map):
 		case 'FourCircles':     return "Four Circles"
 		case 'EndOfTheRoad':    return "End of the Road"
 		### INTERMEDIATE ###
+		case 'LostCrevasse':    return "Lost Crevasse"
 		case 'LuminousCove':    return "Luminous Cove"
 		case 'SulfurSprings':   return "Sulfur Springs"
 		case 'WaterPark':       return "Water Park"
@@ -162,49 +163,48 @@ tower_sort_order = {
     'Gwendolin': 2,
     'StrikerJones': 3,
     'ObynGreenfoot': 4,
-    'Rosalia': 5,
-    'CaptainChurchill': 6,
-    'Benjamin': 7,
-    'PatFusty': 8,
+	'Silas': 5,
+	'Benjamin': 6,
+	'PatFusty': 7,
+    'CaptainChurchill': 8,
     'Ezili': 9,
-    'Adora': 10,
-    'Etienne': 11,
+	'Rosalia': 10,
+	'Etienne': 11,
     'Sauda': 12,
-    'AdmiralBrickell': 13,
-    'Psi': 14,
-    'Geraldo': 15,
-    'Corvus': 16,
+    'Adora': 13,
+    'AdmiralBrickell': 14,
+    'Psi': 15,
+    'Geraldo': 16,
+    'Corvus': 17,
     ## PRIMARY ##
-    'DartMonkey': 17,
-    'BoomerangMonkey': 18,
-    'BombShooter': 19,
-    'TackShooter': 20,
-    'IceMonkey': 21,
-    'GlueGunner': 22,
-    'Desperado': 23,
+    'DartMonkey': 18,
+    'BoomerangMonkey': 19,
+    'BombShooter': 20,
+    'TackShooter': 21,
+    'IceMonkey': 22,
+    'GlueGunner': 23,
+    'Desperado': 24,
     ## MILITARY ##
-    'SniperMonkey': 24,
-    'MonkeySub': 25,
-    'MonkeyBuccaneer': 26,
-    'MonkeyAce': 27,
-    'HeliPilot': 28,
-    'MortarMonkey': 29,
-    'DartlingGunner': 30,
+    'SniperMonkey': 25,
+    'MonkeySub': 26,
+    'MonkeyBuccaneer': 27,
+    'MonkeyAce': 28,
+    'HeliPilot': 29,
+    'MortarMonkey': 30,
+    'DartlingGunner': 31,
     ## MAGIC ##
-    'WizardMonkey': 31,
-    'SuperMonkey': 32,
-    'NinjaMonkey': 33,
-    'Alchemist': 34,
-    'Druid': 35,
-    'Mermonkey': 36,
+    'WizardMonkey': 32,
+    'SuperMonkey': 33,
+    'NinjaMonkey': 343,
+    'Alchemist': 35,
+    'Druid': 36,
+    'Mermonkey': 37,
     ## SUPPORT ##
-    'BananaFarm': 37,
-    'SpikeFactory': 38,
-    'MonkeyVillage': 39,
-    'EngineerMonkey': 40,
-    'BeastHandler': 41,
-	##### DEBUG: Will be promoted later
-	'Silas': 42
+    'BananaFarm': 38,
+    'SpikeFactory': 39,
+    'MonkeyVillage': 40,
+    'EngineerMonkey': 41,
+    'BeastHandler': 42
 }
 
 # https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
