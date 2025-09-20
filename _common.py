@@ -220,7 +220,8 @@ def fmttime(millisecs):
 def map_stats (my_map):
 	stats = ""
 
-	if my_map['maxTowers'] != 9999:
+	# maxTowers = 0 found in some recent Odysseys
+	if my_map['maxTowers'] != 9999 and my_map['maxTowers'] != 0:
 		stats += ", {} Towers".format(my_map['maxTowers'])
 	
 	if my_map['_bloonModifiers']['allCamo'] == True:

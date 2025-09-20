@@ -52,7 +52,7 @@ These scripts require a **colour terminal** to pretty-display all the informatio
 
 These scripts require Python 3.10 and newer because these scripts depend on [the new `match` and `case` operators introduced in Python 3.10](https://docs.python.org/3/whatsnew/3.10.html#pep-634-structural-pattern-matching).
 
-For leaderboard display in `races.py`, `bosses.py` and `b2_seasons.py`, you must install the [`tabulate` module](https://pypi.org/project/tabulate/) - either by simply running `pip install tabulate` or, if you are under Linux, creating a virtual environment with `python3 -m venv <path to venv>` and then running `<path to venv>/bin/pip install tabulate` and `<path to venv>/bin/python3 [script]` respectively.
+For leaderboard display in `races.py`, `bosses.py` and `b2_seasons.py` as well as all features in `ct.py`, you must install the [`tabulate` module](https://pypi.org/project/tabulate/) - either by simply running `pip install tabulate` or, if you are under Linux, creating a virtual environment with `python3 -m venv <path to venv>` and then running `<path to venv>/bin/pip install tabulate` and `<path to venv>/bin/python3 [script]` respectively.
 
 ## Things not implemented yet
 
