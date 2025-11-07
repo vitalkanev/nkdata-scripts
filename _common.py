@@ -93,66 +93,67 @@ def pretty_tower (a_tower):
 		case 'EngineerMonkey':    return "Engineer"
 		case 'BeastHandler':      return "Beast"
 		### Single-word heroes and towers - Geraldo, Desperado, Mermonkey, etc. ###
-		case _:                  return a_tower
+		case _:                   return a_tower
 
 def pretty_map (map):
 	match map:
 		### BEGINNER ###
-		case 'Tutorial':        return "Monkey Meadow" # Tutorial actually happens in Town Centre believe me or not ;)
-		case 'InTheLoop':       return "In The Loop"
-		case 'MiddleOfTheRoad': return "Middle of the Road"
-		case 'SpaPits':         return "Spa Pits"
-		case 'TreeStump':       return "Tree Stump"
-		case 'TownCentre':      return "Town Centre" # British spelling!
-		case 'OneTwoTree':      return "One Two Tree"
-		case 'TheCabin':        return "The Cabin"
-		case 'LotusIsland':     return "Lotus Island"
-		case 'CandyFalls':      return "Candy Falls"
-		case 'WinterPark':      return "Winter Park"
-		case 'ParkPath':        return "Park Path"
-		case 'AlpineRun':       return "Alpine Run"
-		case 'FrozenOver':      return "Frozen Over"
-		case 'FourCircles':     return "Four Circles"
-		case 'EndOfTheRoad':    return "End of the Road"
+		case 'Tutorial':         return "Monkey Meadow" # Tutorial actually happens in Town Centre believe me or not ;)
+		case 'InTheLoop':        return "In The Loop"
+		case 'ThreeMinesAround': return "Three Mines 'Round"
+		case 'MiddleOfTheRoad':  return "Middle of the Road"
+		case 'SpaPits':          return "Spa Pits"
+		case 'TreeStump':        return "Tree Stump"
+		case 'TownCentre':       return "Town Centre" # British spelling!
+		case 'OneTwoTree':       return "One Two Tree"
+		case 'TheCabin':         return "The Cabin"
+		case 'LotusIsland':      return "Lotus Island"
+		case 'CandyFalls':       return "Candy Falls"
+		case 'WinterPark':       return "Winter Park"
+		case 'ParkPath':         return "Park Path"
+		case 'AlpineRun':        return "Alpine Run"
+		case 'FrozenOver':       return "Frozen Over"
+		case 'FourCircles':      return "Four Circles"
+		case 'EndOfTheRoad':     return "End of the Road"
 		### INTERMEDIATE ###
-		case 'LostCrevasse':    return "Lost Crevasse"
-		case 'LuminousCove':    return "Luminous Cove"
-		case 'SulfurSprings':   return "Sulfur Springs"
-		case 'WaterPark':       return "Water Park"
-		case 'CoveredGarden':   return "Covered Garden"
-		case 'QuietStreet':     return "Quiet Street"
-		case 'BloonariusPrime': return "Bloonarius Prime"
-		case 'AdorasTemple':    return "Adora's Temple"
-		case 'SpringSpring':    return "Spring Spring"
-		case 'KartsNDarts':     return "Karts'n'Darts" # I prefer this spelling. Also, Pay'n'Spray
-		case 'MoonLanding':     return "Moon Landing"
-		case 'FiringRange':     return "Firing Range"
-		case 'SpiceIslands':    return "Spice Islands"
+		case 'LostCrevasse':     return "Lost Crevasse"
+		case 'LuminousCove':     return "Luminous Cove"
+		case 'SulfurSprings':    return "Sulfur Springs"
+		case 'WaterPark':        return "Water Park"
+		case 'CoveredGarden':    return "Covered Garden"
+		case 'QuietStreet':      return "Quiet Street"
+		case 'BloonariusPrime':  return "Bloonarius Prime"
+		case 'AdorasTemple':     return "Adora's Temple"
+		case 'SpringSpring':     return "Spring Spring"
+		case 'KartsNDarts':      return "Karts'n'Darts" # I prefer this spelling. Also, Pay'n'Spray
+		case 'MoonLanding':      return "Moon Landing"
+		case 'FiringRange':      return "Firing Range"
+		case 'SpiceIslands':     return "Spice Islands"
 		### ADVANCED ###
-		case 'SunsetGulch':     return "Sunset Gulch"
-		case 'EnchantedGlade':  return "Enchanted Glade"
-		case 'LastResort':      return "Last Resort"
-		case 'AncientPortal':   return "Ancient Portal"
-		case 'CastleRevenge':   return "Castle Revenge"
-		case 'DarkPath':        return "Dark Path"
-		case 'MidnightMansion': return "Midnight Mansion"
-		case 'SunkenColumns':   return "Sunken Columns" # DID YOU KNOW: This map is a port of Battles 2 map "Basalt Columns"?
-		case 'XFactor':         return "X-Factor" # I know I spell this like a classic TV show...
-		case 'PatsPond':        return "Pat's Pond"
-		case 'HighFinance':     return "High Finance"
-		case 'AnotherBrick':    return "Another Brick"
-		case 'OffTheCoast':     return "Off the Coast"
+		case 'SunsetGulch':      return "Sunset Gulch"
+		case 'EnchantedGlade':   return "Enchanted Glade"
+		case 'LastResort':       return "Last Resort"
+		case 'AncientPortal':    return "Ancient Portal"
+		case 'CastleRevenge':    return "Castle Revenge"
+		case 'DarkPath':         return "Dark Path"
+		case 'MidnightMansion':  return "Midnight Mansion"
+		case 'SunkenColumns':    return "Sunken Columns" # DID YOU KNOW: This map is a port of Battles 2 map "Basalt Columns"?
+		case 'XFactor':          return "X-Factor" # I know I spell this like a classic TV show...
+		case 'PatsPond':         return "Pat's Pond"
+		case 'HighFinance':      return "High Finance"
+		case 'AnotherBrick':     return "Another Brick"
+		case 'OffTheCoast':      return "Off the Coast"
 		### EXPERT ###
-		case 'GlacialTrail':    return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
-		case 'DarkDungeons':    return "Dark Dungeons"
-		case 'FloodedValley':   return "Flooded Valley"
-		case 'BloodyPuddles':   return "Bloody Puddles"
-		case 'DarkCastle':      return "Dark Castle"
-		case 'MuddyPuddles':    return "Muddy Puddles"
-		case '#ouch':           return "#Ouch"
+		case 'GlacialTrail':     return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
+		case 'DarkDungeons':     return "Dark Dungeons"
+		case 'FloodedValley':    return "Flooded Valley"
+		case 'BloodyPuddles':    return "Bloody Puddles"
+		case 'DarkCastle':       return "Dark Castle"
+		case 'MuddyPuddles':     return "Muddy Puddles"
+		case '#ouch':            return "#Ouch"
 		### Special maps ###
-		case 'ProtectTheYacht': return "Protect The Yacht" # Mr. Beast Promo
-		case 'Blons':           return "BLONS!!!" # Don't ask me why (rhyme this like "It doesn't matter")
+		case 'ProtectTheYacht':  return "Protect The Yacht" # Mr. Beast Promo
+		case 'Blons':            return "BLONS!!!" # No questions asked.
 		### SINGLE-WORD MAPS ###
 		case _: return map
 

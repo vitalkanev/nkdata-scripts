@@ -210,6 +210,8 @@ def get_odyssey (id):
 						return "MOABMine"
 					case 'EnergisingTotem':
 						return "ETotem"
+					case 'SuperMonkeyBeacon':
+						return "Super Monkey Beacon (Pro Power)"
 					case _:
 						return my_power
 			else:
