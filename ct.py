@@ -140,10 +140,20 @@ def team_leaderboard (ct_id, limit=50):
 	for pager in range(1,5):
 		merged_scores += load_json_url("{}?page={}".format(team_board_url, pager))['body']
 
+	def pretty_team_name (team):
+		if '(disbanded)' in team:
+			return '[disbanded] {}'.format(team.replace(' (disbanded)', '').upper())
+		elif '-' in team:
+			# This removes team code
+			# TODO: Possible false positives!!
+			return team[:-13].upper()
+		else:
+			return team.upper()
+
 	for pos, i in enumerate(merged_scores):
 		score_array.append([
 			pos+1,
-			i['displayName'],
+			pretty_team_name(i['displayName']),
 			i['score']
 		])
 	
