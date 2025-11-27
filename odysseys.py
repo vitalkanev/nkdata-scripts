@@ -200,6 +200,8 @@ def get_odyssey (id):
 						return "ETotem"
 					case 'SuperMonkeyBeacon':
 						return "Super Monkey Beacon (Pro Power)"
+					case 'BananaFarmerPro':
+						return "Banana Farmer Pro (Pro Power)"
 					case _:
 						return my_power
 			else:
