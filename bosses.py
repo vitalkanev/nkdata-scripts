@@ -133,7 +133,7 @@ def get_boss (boss_id):
 			color_reset,
 			pretty_score(dif_score),
 			dif_get['difficulty'],
-			dif_get['mode'],
+			pretty_mode(dif_get['mode']),
 			is_least_type,
 			color_bold,
 			color_reset,

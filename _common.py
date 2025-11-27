@@ -157,6 +157,14 @@ def pretty_map (map):
 		### SINGLE-WORD MAPS ###
 		case _: return map
 
+def pretty_mode (a_mode):
+	match a_mode:
+		case 'Clicks':                return "CHIMPS"
+		case 'AlternateBloonsRounds': return "ABR"
+		case 'DoubleMoabHealth':      return "Double HP MOAB"
+		case 'HalfCash':              return "Half-Cash"
+		case _:                       return a_mode
+
 tower_sort_order = {
     ## HEROES ##
     'ChosenPrimaryHero': 0,
@@ -196,7 +204,7 @@ tower_sort_order = {
     ## MAGIC ##
     'WizardMonkey': 32,
     'SuperMonkey': 33,
-    'NinjaMonkey': 343,
+    'NinjaMonkey': 34,
     'Alchemist': 35,
     'Druid': 36,
     'Mermonkey': 37,

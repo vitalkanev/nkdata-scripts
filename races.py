@@ -83,7 +83,7 @@ def get_race (race_id):
 		pretty_map(race_info['map']),
 		color_lightblack,
 		race_info['difficulty'],
-		race_info['mode'],
+		pretty_mode(race_info['mode']),
 		color_reset,
 		is_least_type,
 		color_bold,
@@ -160,7 +160,7 @@ def get_race (race_id):
 	if map_stats(race_info) != "":
 		print(re.sub('^, ', '', map_stats(race_info)))
 
-	print("\n{}Add a number between 1 and 100 to display the leaderboard!\nNOTE: There might be differences between Data API and the actual game. When in doubt, trust the game first!{}".format(color_italic, color_reset))
+	print("\n{}Add a number between 1 and 100 to display the leaderboard.{}".format(color_italic, color_reset))
 
 def get_race_scores (race_id, limit=50):
 	try:

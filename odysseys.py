@@ -148,18 +148,6 @@ def get_odyssey (id):
 
 		# Map Stat Handling
 		for num, maps in enumerate(map_list['body']):
-			map_mode = ""
-
-			# Clicks is an internal name for CHIMPS
-			if maps['mode'] == "Clicks":
-				map_mode = "CHIMPS"
-			elif maps['mode'] == "AlternateBloonsRounds":
-				map_mode = "ABR"
-			elif maps['mode'] == "DoubleMoabHealth":
-				map_mode = "Double HP MOAB"
-			else:
-				map_mode = maps['mode']
-
 			if len(maps['roundSets']) > 1:
 				custom_rounds = ", CustomRounds={}".format(maps['roundSets'][1:])
 			else:
@@ -171,7 +159,7 @@ def get_odyssey (id):
 				pretty_map(maps['map']),
 				color_reset,
 				maps['difficulty'],
-				map_mode,
+				pretty_mode(maps['mode']),
 				maps['startingCash'],
 				maps['startRound'],
 				maps['endRound'],
