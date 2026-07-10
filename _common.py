@@ -66,6 +66,7 @@ def pretty_tower (a_tower):
 		case 'CaptainChurchill':  return "Churchill"
 		case 'PatFusty':          return "Pat"
 		case 'AdmiralBrickell':   return "Brickell"
+		case 'DanDMonke':         return "Dan D'Monke"
 		### PRIMARY ###
 		case 'DartMonkey':        return "Dart"
 		case 'BoomerangMonkey':   return "Boomer"
@@ -185,35 +186,36 @@ tower_sort_order = {
     'Psi': 15,
     'Geraldo': 16,
     'Corvus': 17,
+	'DanDMonke': 18,
     ## PRIMARY ##
-    'DartMonkey': 18,
-    'BoomerangMonkey': 19,
-    'BombShooter': 20,
-    'TackShooter': 21,
-    'IceMonkey': 22,
-    'GlueGunner': 23,
-    'Desperado': 24,
+    'DartMonkey': 19,
+    'BoomerangMonkey': 20,
+    'BombShooter': 21,
+    'TackShooter': 22,
+    'IceMonkey': 23,
+    'GlueGunner': 24,
+    'Desperado': 25,
     ## MILITARY ##
-    'SniperMonkey': 25,
-    'MonkeySub': 26,
-    'MonkeyBuccaneer': 27,
-    'MonkeyAce': 28,
-    'HeliPilot': 29,
-    'MortarMonkey': 30,
-    'DartlingGunner': 31,
+    'SniperMonkey': 26,
+    'MonkeySub': 27,
+    'MonkeyBuccaneer': 28,
+    'MonkeyAce': 29,
+    'HeliPilot': 30,
+    'MortarMonkey': 31,
+    'DartlingGunner': 32,
     ## MAGIC ##
-    'WizardMonkey': 32,
-    'SuperMonkey': 33,
-    'NinjaMonkey': 34,
-    'Alchemist': 35,
-    'Druid': 36,
-    'Mermonkey': 37,
+    'WizardMonkey': 33,
+    'SuperMonkey': 34,
+    'NinjaMonkey': 35,
+    'Alchemist': 36,
+    'Druid': 37,
+    'Mermonkey': 38,
     ## SUPPORT ##
-    'BananaFarm': 38,
-    'SpikeFactory': 39,
-    'MonkeyVillage': 40,
-    'EngineerMonkey': 41,
-    'BeastHandler': 42
+    'BananaFarm': 39,
+    'SpikeFactory': 40,
+    'MonkeyVillage': 41,
+    'EngineerMonkey': 42,
+    'BeastHandler': 43
 }
 
 # https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/

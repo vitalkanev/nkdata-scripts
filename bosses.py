@@ -22,6 +22,7 @@ def pretty_boss (a):
 		case 'dreadbloon':     return "Dreadbloon"
 		case 'phayze':         return "Phayze"
 		case 'blastapopoulos': return "Blastapopoulos"
+		case 'diamondback':    return "Diamondback"
 		case _:                return a
 
 def pretty_score (b):
