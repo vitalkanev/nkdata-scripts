@@ -145,6 +145,7 @@ def pretty_map (map):
 		case 'AnotherBrick':     return "Another Brick"
 		case 'OffTheCoast':      return "Off the Coast"
 		### EXPERT ###
+		case 'TrickyTracks':     return "Tricky Tracks"
 		case 'GlacialTrail':     return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
 		case 'DarkDungeons':     return "Dark Dungeons"
 		case 'FloodedValley':    return "Flooded Valley"

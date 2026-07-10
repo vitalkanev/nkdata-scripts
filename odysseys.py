@@ -141,8 +141,8 @@ def get_odyssey (id):
 				)
 
 		# HACK
-		if tower_list.startswith(", Quincy, Gwendolin, Jones, Obyn, Rosalia, Churchill, Benjamin, Pat, Ezili, Adora, Etienne, Sauda, Brickell, Psi, Geraldo, Corvus,"):
-			tower_list = tower_list.replace(", Quincy, Gwendolin, Jones, Obyn, Rosalia, Churchill, Benjamin, Pat, Ezili, Adora, Etienne, Sauda, Brickell, Psi, Geraldo, Corvus,", "All Heroes,")
+		if tower_list.startswith(", Quincy, Gwendolin, Jones, Obyn, Silas, Benjamin, Pat, Churchill, Ezili, Rosalia, Etienne, Sauda, Adora, Brickell, Psi, Geraldo, Corvus,"):
+			tower_list = tower_list.replace(", Quincy, Gwendolin, Jones, Obyn, Silas, Benjamin, Pat, Churchill, Ezili, Rosalia, Etienne, Sauda, Adora, Brickell, Psi, Geraldo, Corvus,", "All Heroes,")
 
 		print(re.sub('^, ', '', tower_list))
 
