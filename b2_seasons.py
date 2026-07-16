@@ -62,7 +62,7 @@ def get_season_scores (season_num, limit=50):
 	try:
 		season_num = int(season_num)
 	except:
-		error_exit("The season number must be a number", exit_code=4)
+		error_exit("The season must be a number", exit_code=4)
 	
 	try:
 		limit = int(limit)
@@ -82,15 +82,14 @@ def get_season_scores (season_num, limit=50):
 
 	season_board_url = "{}/season_{}/leaderboard".format(url_seasonlist, season_num - 1)
 
-	merged_scores = load_json_url(season_board_url)['body'] + load_json_url(season_board_url + "?page=2")['body']
-
-	if load_json_url(season_board_url)['success'] == False:
-			# This error message can be triggered by a season where scores=0
-			error_exit(
+	try:
+		merged_scores = load_json_url(season_board_url)['body'] + load_json_url(season_board_url + "?page=2")['body']
+	except KeyError as e:
+		error_exit(
 				"No scores available for this season. Either you are trying to request\ninformation about a season that did not start/finish yet or you are\ntrying to request information about a very old season that existed\nprior to the announcement of the Ninja Kiwi Open Data API\n(before ~2024).",
-				load_json_url(season_board_url)['error']
+				e
 			)
-	
+
 	score_array = []
 
 	for pos, score in enumerate(merged_scores):

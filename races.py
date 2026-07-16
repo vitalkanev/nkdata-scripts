@@ -181,7 +181,10 @@ def get_race_scores (race_id, limit=50):
 			exit_code=2
 		)
 
-	merged_scores = load_json_url("{}/{}/leaderboard".format(url_racelist, race_id))['body'] + load_json_url("{}/{}/leaderboard?page=2".format(url_racelist, race_id))['body']
+	try:
+		merged_scores = load_json_url("{}/{}/leaderboard".format(url_racelist, race_id))['body'] + load_json_url("{}/{}/leaderboard?page=2".format(url_racelist, race_id))['body']
+	except Exception as e:
+		error_exit("Either Race event has not started yet or you queried the scores too early or the leaderboards have bugged", e)
 
 	for pos, score in enumerate(merged_scores):
 		score_array.insert(pos, [

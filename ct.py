@@ -105,7 +105,10 @@ def player_leaderboard (ct_id, limit=50):
 	score_array = []
 	
 	for pager in range(1,5):
-		merged_scores += load_json_url("{}?page={}".format(player_board_url, pager))['body']
+		try:
+			merged_scores += load_json_url("{}?page={}".format(player_board_url, pager))['body']
+		except Exception as e:
+			error_exit("Either this event didn't start yet or you queried the scores too early or the leaderboards have bugged", e)
 
 	for pos, i in enumerate(merged_scores):
 		score_array.append([
@@ -138,7 +141,10 @@ def team_leaderboard (ct_id, limit=50):
 	score_array = []
 	
 	for pager in range(1,5):
-		merged_scores += load_json_url("{}?page={}".format(team_board_url, pager))['body']
+		try:
+			merged_scores += load_json_url("{}?page={}".format(team_board_url, pager))['body']
+		except Exception as e:
+			error_exit("Either this event didn't start yet or you queried the scores too early or the leaderboards have bugged", e)
 
 	def pretty_team_name (team):
 		if '(disbanded)' in team:
