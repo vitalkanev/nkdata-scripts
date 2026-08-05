@@ -116,6 +116,7 @@ def pretty_map (map):
 		case 'FrozenOver':       return "Frozen Over"
 		case 'FourCircles':      return "Four Circles"
 		case 'EndOfTheRoad':     return "End of the Road"
+		case 'SkullTweak':       return "Skull Tweak"
 		### INTERMEDIATE ###
 		case 'LostCrevasse':     return "Lost Crevasse"
 		case 'LuminousCove':     return "Luminous Cove"
@@ -144,6 +145,8 @@ def pretty_map (map):
 		case 'HighFinance':      return "High Finance"
 		case 'AnotherBrick':     return "Another Brick"
 		case 'OffTheCoast':      return "Off the Coast"
+		case "PartyParade":      return "Party Parade"
+		case 'MushroomGrotto':   return "Mushroom Grotto"
 		### EXPERT ###
 		case 'TrickyTracks':     return "Tricky Tracks"
 		case 'GlacialTrail':     return "Glacial Trail" # I hate this map so much! If the collection event rolls here, I quit.
@@ -211,12 +214,13 @@ tower_sort_order = {
     'Alchemist': 36,
     'Druid': 37,
     'Mermonkey': 38,
+	'Skywarden': 39,
     ## SUPPORT ##
-    'BananaFarm': 39,
-    'SpikeFactory': 40,
-    'MonkeyVillage': 41,
-    'EngineerMonkey': 42,
-    'BeastHandler': 43
+    'BananaFarm': 40,
+    'SpikeFactory': 41,
+    'MonkeyVillage': 42,
+    'EngineerMonkey': 43,
+    'BeastHandler': 44
 }
 
 # https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
