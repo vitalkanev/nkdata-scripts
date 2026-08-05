@@ -73,8 +73,6 @@ The following features are currently not implemented in this repository, but the
   - ~~Hall of Masters Leaderboard~~ DONE!
   - Clans and Clan Wars (unlikely to be implemented in the near future)
 
-The Data API does not have BTD6 Boss Rush, nor any BCS related endpoints.
-
 ## Legal Information
 
 These scripts are available under the [MIT License](LICENSE).
