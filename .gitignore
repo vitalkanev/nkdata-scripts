@@ -1,5 +1,8 @@
 __pycache__ 
 
-# This is needed for documenting some things
+# Data and testing
 *.txt
 *.json
+
+# Scripts that sound useless
+scrap_*
