@@ -14,7 +14,6 @@ except:
 
 url_ctbase = "https://data.ninjakiwi.com/btd6/ct"
 
-# TODO: arg_handler
 
 def pretty_relic (relic):
 	# Too many relics to handle via match-case, use Regex instead....
@@ -183,7 +182,9 @@ def team_leaderboard (ct_id, limit=50):
 
 	print(tabulate(score_array[0:limit], tablefmt='github', headers=["Rank", "Team Name", "Points"]))
 
-def ct_arg_handler (ct_id, event='', limit=50):
+def ct_arg_handler (cid, event='', limit=50):
+	ct_id = arg_handler(cid, url_ctbase)
+
 	sanity_url = load_json_url("{}/{}/tiles".format(url_ctbase, ct_id))
 	if sanity_url['success'] == False:
 		error_exit("You have provided an ID for a CT event that doesn't exist. It might have been archived.", sanity_url['error'])
