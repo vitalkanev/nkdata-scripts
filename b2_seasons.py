@@ -59,6 +59,8 @@ def list_seasons ():
 	print("{}To get information about a specific season, add a season number to the command{}".format(color_italic, color_reset))
 
 def get_season_scores (season_num, limit=50):
+	# TODO: Handling of season numbers for arg_handler
+
 	try:
 		season_num = int(season_num)
 	except:

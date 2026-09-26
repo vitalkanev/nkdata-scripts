@@ -10,8 +10,11 @@ def print_help ():
 game developed and presented by Ninja Kiwi.
 
 This script allows one {}optional{} argument - the ID of the Odyssey
-you want to get information for. If you don't pass this argument, this
-script will display all Odysseys available in Ninja Kiwi Data API.
+you want to get information for, or 'current'/'latest' to get
+information for the latest Odyssey available, or 'previous'/'last' to
+get information for the previous Odyssey. If you don't pass this
+argument, this script will display all Odysseys available in
+Ninja Kiwi Data API.
 
 This script is not affiliated with Ninja Kiwi and/or their partners.
 Script developed by vitalkanev""".format( color_bold, color_reset ))
@@ -33,7 +36,9 @@ def list_odysseys ():
 			pretty_event_time(lists['end'])
 		))
 
-def get_odyssey (id):
+def get_odyssey (idx):
+	id = arg_handler(idx, url_odysseylist)
+
 	odysseys_list = load_json_url(url_odysseylist)
 	for my_odyssey in odysseys_list['body']:
 		if my_odyssey['id'] == id:

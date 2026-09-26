@@ -27,6 +27,9 @@ This script allows multiple optional arguments:
 2. Display Top X leaderboard for specific Race Event:
    $ python races.py [race_id] [1-100]
 
+race_id can either be Race ID listed by the script when no arguments
+were provided, or either 'current'/'latest' or 'previous'/'last'.
+
 When no arguments are given, displays list of all Race Events
 currently available.
 
@@ -56,7 +59,9 @@ def list_races ():
 
 	print(formatted_list)
 
-def get_race (race_id):
+def get_race (rid):
+	race_id = arg_handler(rid, url_racelist)
+
 	race_info_url = load_json_url("{}/{}/metadata".format(url_racelist, race_id))
 
 	if race_info_url['success'] == False:
@@ -162,7 +167,9 @@ def get_race (race_id):
 
 	print("\n{}Add a number between 1 and 100 to display the leaderboard.{}".format(color_italic, color_reset))
 
-def get_race_scores (race_id, limit=50):
+def get_race_scores (rid, limit=50):
+	race_id = arg_handler(rid, url_racelist)
+
 	try:
 		limit = int(limit)
 	except:

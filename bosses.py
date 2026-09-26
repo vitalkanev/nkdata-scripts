@@ -46,6 +46,9 @@ This script allows multiple optional arguments:
 2. Display Top X leaderboard for specific Boss Bloon Event:
    $ python bosses.py [boss_id] [normal|elite] [1-100]
 
+boss_id can either be Boss ID listed by the script when no arguments
+were provided, or either 'current'/'latest' or 'previous'/'last'.
+
 When no arguments are given, displays list of all Boss Bloon Events
 currently available.
 
@@ -76,7 +79,9 @@ def list_bosses ():
 
 	print(formatted_list)
 
-def get_boss (boss_id):
+def get_boss (bid):
+	boss_id = arg_handler(bid, url_bosslist)
+
 	boss_type = ""
 	bosses_list = load_json_url(url_bosslist)
 
@@ -216,7 +221,9 @@ def get_boss (boss_id):
 		else:
 			print()
 
-def get_boss_scores (boss_id, boss_type, limit=50):
+def get_boss_scores (bid, boss_type, limit=50):
+	boss_id = arg_handler(bid, url_bosslist)
+
 	match boss_type:
 		case 'normal': difficulty = "standard"
 		case 'elite': difficulty = "elite"

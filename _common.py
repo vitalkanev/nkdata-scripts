@@ -54,6 +54,15 @@ def load_json_url (url):
 			e
 		)
 
+def arg_handler (arg, list_url):
+	if arg == "current" or arg == "latest":
+		return load_json_url(list_url)["body"][0]["id"]
+	elif arg == "previous" or arg == "last":
+		return load_json_url(list_url)["body"][1]["id"]
+	else:
+		return arg
+
+
 def pretty_event_time (time, format='%d/%m/%Y %H:%M:%S'):
 	return datetime.datetime.fromtimestamp(int(time / 1000)).strftime(format)
 
