@@ -141,6 +141,7 @@ def pretty_map (map):
 		case 'FiringRange':      return "Firing Range"
 		case 'SpiceIslands':     return "Spice Islands"
 		### ADVANCED ###
+		case 'ShipCapture':      return "Ship Capture"
 		case 'SunsetGulch':      return "Sunset Gulch"
 		case 'EnchantedGlade':   return "Enchanted Glade"
 		case 'LastResort':       return "Last Resort"
