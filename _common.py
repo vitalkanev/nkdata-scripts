@@ -230,7 +230,9 @@ tower_sort_order = {
     'SpikeFactory': 41,
     'MonkeyVillage': 42,
     'EngineerMonkey': 43,
-    'BeastHandler': 44
+    'BeastHandler': 44,
+	### Unused towers ###
+	'Bloonscrapper': 99999
 }
 
 # https://www.darrelherbst.com/post/2016-03-05-python-format-seconds-to-time-with-milliseconds/
